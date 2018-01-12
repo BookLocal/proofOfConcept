@@ -255,6 +255,10 @@ contract RoomBase is PermissionedAccess {
 // Room ownership adds ERC-721 interface to the room base
 contract RoomOwnership is RoomBase {
 
+    /**
+    Define ERC-721 functions
+    */
+
     // @dev find number of rooms (i.e. number of tokens)
     function totalSupply() external view returns(uint256 supply){
         supply = rooms.length - 1;
@@ -339,6 +343,10 @@ contract RoomRenting is RoomOwnership {
         ceo = msg.sender;
     }
 
+    /**
+    Define ERC-809 functions
+    */
+    
     // @dev reserve future access to an asset
     function reserve(uint256 _tokenId, uint256 _start, uint256 _stop) external returns (bool){
         address guest = msg.sender;
