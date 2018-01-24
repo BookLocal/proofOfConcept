@@ -28,6 +28,7 @@ let coo = RR.coo();
 let totalSupply = RR.totalSupply().toString();
 console.log("totalSupply: " + totalSupply + " " + typeof totalSupply);
 // @dev add error handling here: if there are no rooms this method will fail.
+// TODO: Refactor such that we don't use RB, just RR.
 let roomInfo = RB.rooms(Number(totalSupply) - 1);
 let roomId = Number(totalSupply) - 1;
 let hotelId = String(roomInfo[0]).split(',');
