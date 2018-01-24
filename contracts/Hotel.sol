@@ -163,7 +163,7 @@ contract RoomBase is PermissionedAccess {
     }
 
     // @dev init array of Room structs, called rooms
-    Room[] rooms;
+    Room[] public rooms;
 
     // @dev default minimum unit of rent is one day (in seconds)
     uint256 public MIN_RENT_TIME = 3600*24;
@@ -261,7 +261,7 @@ contract RoomOwnership is RoomBase {
 
     // @dev find number of rooms (i.e. number of tokens)
     function totalSupply() external view returns(uint256 supply){
-        supply = rooms.length - 1;
+        supply = rooms.length;
     }
 
     // @dev find owner of specific room
@@ -346,7 +346,7 @@ contract RoomRenting is RoomOwnership {
     /**
     Define ERC-809 functions
     */
-    
+
     // @dev reserve future access to an asset
     function reserve(uint256 _tokenId, uint256 _start, uint256 _stop) external returns (bool){
         address guest = msg.sender;
