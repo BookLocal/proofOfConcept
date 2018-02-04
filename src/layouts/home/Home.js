@@ -8,6 +8,7 @@ import AddRoomForm from './Add-Room.js';
 import ChangeOfficersForm from './change-admins.js';
 import OwnerOf from './ownerOf.js';
 import Transfer from './Transfer.js';
+import TransferFrom from './Transfer-From.js';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
@@ -146,6 +147,7 @@ class Home extends Component {
             />
             <OwnerOf />
             <Transfer />
+            <TransferFrom />
             <AddRoomForm
               getBalance={this.getBalance}
               getTotalSupply={this.getTotalSupply}
