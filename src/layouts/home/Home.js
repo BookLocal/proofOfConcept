@@ -5,7 +5,8 @@ import TotalSupply from './total-supply.js';
 import '../../App.css';
 import Web3 from 'web3';
 import AddRoomForm from './Add-Room.js';
-import ChangeOfficersForm from './change-admins.js'
+import ChangeOfficersForm from './change-admins.js';
+import OwnerOf from './ownerOf.js';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
@@ -142,6 +143,7 @@ class Home extends Component {
               minRentTime={minRentTime}
               numBeds={numBeds}
             />
+            <OwnerOf />
             <AddRoomForm
               getBalance={this.getBalance}
               getTotalSupply={this.getTotalSupply}
