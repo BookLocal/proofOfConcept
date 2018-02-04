@@ -47,17 +47,53 @@ class AddRoomForm extends Component{
   }
 
   render() {
+    const style={
+      backgroundColor: '#4D4D4D',
+      color: '',
+      textAlign: '',
+      padding: '20px',
+      fontWeight: 'bold',
+      width: '450px',
+      border: '50px',
+      margin: '200px',
+      marginTop: '5px',
+      marginBottom: '5px',
+      display: '',
+      clear: 'both',
+      float: 'left',
+      paddingTop: '50px',
+      paddingRight: '50px',
+      paddingBottom: '50px',
+      paddingLeft: '50px'
+    }
+    const fieldset={
+      border: '2px solid #F4BE41'
+    }
+    const addStyle={
+      textDecoration: 'overline underline',
+      border: '10px #F4BE41',
+      borderWidth: '10px',
+      backgroundColor: 'white',
+      textAlign: 'center',
+      fontSize: '40px',
+      color: '#3973B5'
+    }
+    const labelStyle={
+      border: "2px solid #383838",
+      borderTop: "2px solid red",
+      backgroundColor: "white"
+    }
     const formStyle = {
-      "backgroundColor": "deepskyblue",
+      "backgroundColor": "",
       "flexGrow": 1,
     };
     return (
-      <div className="AddRoomForm">
-        <fieldset>
-          <legend>Add Room</legend>
+      <div style={style} className="AddRoomForm">
+        <fieldset style={fieldset}>
+          <legend style={addStyle}>Add Room</legend>
           <form style={formStyle}>
             <label>
-              Beds:
+            <div style={labelStyle}> Beds: </div>
               <input id="numBeds" onChange={this.handleTextChange} type="text" value={this.state.numBeds} />
             </label>
             <hr />

@@ -35,6 +35,12 @@ class TotalSupply extends Component{
       fontSize: '40px',
       color: '#3973B5'
     }
+    const propStyle={
+      border: "2px solid #383838",
+      borderTop: "2px solid red",
+      backgroundColor: "black",
+      color: 'white'
+    }
     const fieldset={
         border: '2px solid #F4BE41'
     }
@@ -42,7 +48,7 @@ class TotalSupply extends Component{
       <div style={style} className="TotalSupply">
         <fieldset style={fieldset}>
           <legend style={totalStyle}>Total Supply</legend>
-          <p>{this.props.totalSupply}</p>
+          <p style={propStyle}>{this.props.totalSupply}</p>
         </fieldset>
       </div>
     )
