@@ -11,6 +11,7 @@ import Transfer from './Transfer.js';
 import TransferFrom from './Transfer-From.js';
 import Approve from './Approve.js';
 import BalanceOf from './Balance-Of.js';
+import CheckAvailable from './Check-Available.js';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
@@ -147,6 +148,7 @@ class Home extends Component {
               minRentTime={minRentTime}
               numBeds={numBeds}
             />
+            <CheckAvailable />
             <OwnerOf />
             <BalanceOf />
             <Transfer />
