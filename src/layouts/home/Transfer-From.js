@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let transferTo, tokenId, payload, ownerOf;
+let transferFrom, transferTo, tokenId, payload, ownerOf;
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
 let RRAbi = require('../../../abis/RoomRentingAbi.js');
@@ -9,10 +9,11 @@ let RRAddress = '0x9fbda871d559710256a2502a2517b794b482db40';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 
-class Transfer extends Component{
+class TransferFrom extends Component{
   constructor(props){
     super(props)
     this.state = {
+      transferFrom: '',
       transferTo : '',
       tokenId : '',
       ownerOf : '',
@@ -30,16 +31,19 @@ class Transfer extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Transfer fired!");
-    RR.transfer(this.state.transferTo, this.state.tokenId);
+    console.log("TransferFrom fired!");
+    RR.transferFrom(this.state.transferFrom, this.state.transferTo, this.state.tokenId);
   }
 
   render(){
     return(
-      <div className="Transfer">
+      <div className="transferFrom">
         <fieldset>
-          <legend>Transfer</legend>
-            <label>Transfer to address:
+          <legend>Transfer From</legend>
+            <label>
+              Transfer from address:
+              <input id="transferFrom" type="text" onChange={this.handleTextChange} value={this.state.transferFrom} />
+              Transfer to address:
               <input id="transferTo" type="text" onChange={this.handleTextChange} value={this.state.transferTo} />
               Transfer Token Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
@@ -52,4 +56,4 @@ class Transfer extends Component{
   }
 }
 
-export default Transfer
+export default TransferFrom

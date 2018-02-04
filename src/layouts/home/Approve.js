@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let transferTo, tokenId, payload, ownerOf;
+let transferTo, tokenId, payload;
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
 let RRAbi = require('../../../abis/RoomRentingAbi.js');
@@ -9,13 +9,12 @@ let RRAddress = '0x9fbda871d559710256a2502a2517b794b482db40';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 
-class Transfer extends Component{
+class Approve extends Component{
   constructor(props){
     super(props)
     this.state = {
       transferTo : '',
       tokenId : '',
-      ownerOf : '',
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -31,19 +30,19 @@ class Transfer extends Component{
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("Transfer fired!");
-    RR.transfer(this.state.transferTo, this.state.tokenId);
+    RR.approve(this.state.transferTo, this.state.tokenId);
   }
 
   render(){
     return(
-      <div className="Transfer">
+      <div className="approve">
         <fieldset>
-          <legend>Transfer</legend>
+          <legend>Approve</legend>
             <label>Transfer to address:
               <input id="transferTo" type="text" onChange={this.handleTextChange} value={this.state.transferTo} />
               Transfer Token Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
-              <input id="search" type="submit" value="Transfer" onClick={this.handleSubmit} />
+              <input id="search" type="submit" value="Approve" onClick={this.handleSubmit} />
               {this.state.ownerOf}
             </label>
         </fieldset>
@@ -52,4 +51,4 @@ class Transfer extends Component{
   }
 }
 
-export default Transfer
+export default Approve
