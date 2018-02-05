@@ -122,7 +122,7 @@ class Home extends Component {
       gridTemplateColumns: 'repeat(3, 1fr)',
       gridAutoRow: '90px 90px 90px',
       gridAutoColumn: '60px 60px 60px',
-      alignItems: '',
+      alignItems: 'start',
       justifyItems: '',
       gridTemplateAreas: "header header header header main main . sidebar footer footer footer footer",
       /*

@@ -40,14 +40,40 @@ class ChangeNumBeds extends Component{
   }
 
   render(){
+    const style={
+      backgroundColor: '#4D4D4D',
+      padding: '10px',
+      fontWeight: 'bold',
+      width: '420px',
+      marginTop: '5px',
+      marginBottom: '5px',
+    }
+    const fieldset={
+      border: '2px solid #F4BE41'
+    }
+    const legendStyle={
+      textDecoration: 'overline underline',
+      border: '10px #F4BE41',
+      borderWidth: '10px',
+      backgroundColor: 'white',
+      textAlign: 'center',
+      fontSize: '30px',
+      color: '#3973B5'
+    }
+    const labelStyle={
+      border: "2px solid #383838",
+      borderTop: "2px solid red",
+      backgroundColor: "white",
+    }
     return(
-      <div className="ChangeNumBeds">
-        <fieldset>
-        <legend>Change Number of Beds</legend>
-            <label>Room Id:
+      <div style={style} className="ChangeNumBeds">
+        <fieldset style={fieldset}>
+        <legend style={legendStyle}>Change Number of Beds</legend>
+            <label style={labelStyle}>Room Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
-              Number of Beds:
+            <div style={labelStyle}> Number of Beds: </div>
               <input id="numBeds" type="text" onChange={this.handleTextChange} value={this.state.numBeds} />
+              <hr />
               <input id="search" type="submit" value="Change Number of Beds" onClick={this.handleSubmit} />
               {this.state.availability}
             </label>

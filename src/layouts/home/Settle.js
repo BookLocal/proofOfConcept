@@ -39,12 +39,38 @@ class Settle extends Component{
   }
 
   render(){
+    const style={
+      backgroundColor: '#4D4D4D',
+      padding: '10px',
+      fontWeight: 'bold',
+      width: '420px',
+      marginTop: '5px',
+      marginBottom: '5px',
+    }
+    const fieldset={
+      border: '2px solid #F4BE41'
+    }
+    const legendStyle={
+      textDecoration: 'overline underline',
+      border: '10px #F4BE41',
+      borderWidth: '10px',
+      backgroundColor: 'white',
+      textAlign: 'center',
+      fontSize: '40px',
+      color: '#3973B5'
+    }
+    const labelStyle={
+      border: "2px solid #383838",
+      borderTop: "2px solid red",
+      backgroundColor: "white",
+    }
     return(
-      <div className="Settle">
-        <fieldset>
-          <legend>Settle</legend>
-            <label>Room Id:
+      <div style={style} className="Settle">
+        <fieldset style={fieldset}>
+          <legend style={legendStyle}>Settle</legend>
+            <label style={labelStyle}>Room Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
+              <hr />
               <input id="submit" type="submit" value="Settle up" onClick={this.handleSubmit} />
               {this.state.settle}
             </label>

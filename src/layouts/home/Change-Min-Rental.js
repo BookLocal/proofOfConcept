@@ -40,14 +40,41 @@ class ChangeMinRental extends Component{
   }
 
   render(){
+    const style={
+      backgroundColor: '#4D4D4D',
+      padding: '10px',
+      fontWeight: 'bold',
+      width: '420px',
+      marginTop: '5px',
+      marginBottom: '5px',
+    }
+    const fieldset={
+      border: '2px solid #F4BE41'
+    }
+    const changeStyle={
+      textDecoration: 'overline underline',
+      border: '10px #F4BE41',
+      borderWidth: '10px',
+      backgroundColor: 'white',
+      textAlign: 'center',
+      fontSize: '25px',
+      color: '#3973B5'
+    }
+    const labelStyle={
+      border: "2px solid #383838",
+      borderTop: "2px solid red",
+      backgroundColor: "white",
+    }
+
     return(
-      <div className="ChangeMinRental">
-        <fieldset>
-          <legend>Change Minimum Rental Period</legend>
-            <label>Room Id:
+      <div style={style} className="ChangeMinRental">
+        <fieldset style={fieldset}>
+          <legend style={changeStyle}>Change Minimum Rental Period</legend>
+            <label style={labelStyle}>Room Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
-              Minimum Rental Period:
+            <div style={labelStyle}>  Minimum Rental Period: </div>
               <input id="minRental" type="text" onChange={this.handleTextChange} value={this.state.minRental} />
+              <hr />
               <input id="search" type="submit" value="Change Minimum Rental Time" onClick={this.handleSubmit} />
               {this.state.availability}
             </label>
