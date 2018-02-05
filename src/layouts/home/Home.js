@@ -10,6 +10,15 @@ import OwnerOf from './ownerOf.js';
 import Transfer from './Transfer.js';
 import TransferFrom from './Transfer-From.js';
 import Approve from './Approve.js';
+import BalanceOf from './Balance-Of.js';
+import CheckAvailable from './Check-Available.js';
+import Reserve from './Reserve.js';
+import Access from './Access.js';
+import Settle from './Settle.js';
+import CancelReservation from './Cancel-Reservation.js';
+import GetCurrentTime from './Get-Current-Time.js';
+import ChangeMinRental from './Change-Min-Rental.js';
+import ChangeNumBeds from './Change-Num-Beds.js';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
@@ -136,6 +145,7 @@ class Home extends Component {
             <p>The page is being modified to read and write to the Truffle testRpc.</p>
 
             // TODO: call data from blockchain here.
+
             <div style={containerStyle} className="Container">
               <Admins
                 getBalance={this.getBalance}
@@ -171,6 +181,7 @@ class Home extends Component {
               <Transfer />
               <TransferFrom />
               <Approve />
+              <ChangeMinRental />
               <AddRoomForm
                 getBalance={this.getBalance}
                 getTotalSupply={this.getTotalSupply}
@@ -182,6 +193,14 @@ class Home extends Component {
                 addRoom={this.addRoom}
                 transactionObject={this.transactionObject}
               />
+              <ChangeNumBeds />
+              <Access />
+              <Settle />
+              <BalanceOf />
+              <GetCurrentTime />
+              <CheckAvailable />
+              <Reserve />
+              <CancelReservation />
             </div>
             <img id="loader" src='https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif' role="presentation"/>
             // end data call.
