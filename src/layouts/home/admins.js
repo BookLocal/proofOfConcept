@@ -12,22 +12,24 @@ class Admins extends Component{
   render(){
     const style={
       backgroundColor: '#4D4D4D',
-      color: '',
-      textAlign: '',
-      padding: '20px',
+      padding: '10px',
       fontWeight: 'bold',
-      width: '450px',
-      border: '50px',
-      margin: '200px',
+      width: '420px',
       marginTop: '5px',
       marginBottom: '5px',
+      /*
+      color: '',
+      textAlign: '',
+      border: '',
+      margin: '',
       display: '',
-      clear: 'both',
-      float: 'left',
-      paddingTop: '50px',
-      paddingRight: '50px',
-      paddingBottom: '50px',
-      paddingLeft: '50px'
+      clear: '',
+      float: '',
+      paddingTop: '',
+      paddingRight: '',
+      paddingBottom: '',
+      paddingLeft: ''
+      */
     }
     const ceoStyle={
       border: "2px solid #383838",
@@ -50,8 +52,6 @@ class Admins extends Component{
       borderWidth: '10px',
       backgroundColor: 'white',
       textAlign: 'center',
-      textTransform: '',
-      textShadow: '',
       fontSize: '40px',
       color: '#3973B5'
     }
