@@ -17,6 +17,7 @@ import Access from './Access.js';
 import Settle from './Settle.js';
 import CancelReservation from './Cancel-Reservation.js';
 import GetCurrentTime from './Get-Current-Time.js';
+import ChangeMinRental from './Change-Min-Rental.js';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
@@ -164,6 +165,7 @@ class Home extends Component {
             <Transfer />
             <TransferFrom />
             <Approve />
+            <ChangeMinRental />
             <AddRoomForm
               getBalance={this.getBalance}
               getTotalSupply={this.getTotalSupply}
