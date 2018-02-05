@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let transferTo, tokenId, payload, ownerOf;
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
 let RRAbi = require('../../../abis/RoomRentingAbi.js');
@@ -35,44 +34,46 @@ class Transfer extends Component{
   }
 
   render(){
-const style={
-  backgroundColor: '#4D4D4D',
-  padding: '10px',
-  fontWeight: 'bold',
-  width: '420px',
-  marginTop: '5px',
-  marginBottom: '5px',
-  /*
-  color: '',
-  textAlign: '',
-  border: '',
-  margin: '',
-  display: '',
-  clear: '',
-  float: '',
-  paddingTop: '',
-  paddingRight: '',
-  paddingBottom: '',
-  paddingLeft: ''
-  */
-}
-const transferStyle={
-  textDecoration: 'overline underline',
-  border: '10px #F4BE41',
-  borderWidth: '10px',
-  backgroundColor: 'white',
-  textAlign: 'center',
-  fontSize: '40px',
-  color: '#3973B5'
-}
-const fieldset={
-  border: '2px solid #F4BE41'
-}
-const labelStyle={
-  border: "2px solid #383838",
-  borderTop: "2px solid red",
-  backgroundColor: "white"
-}
+
+    const style={
+      backgroundColor: '#4D4D4D',
+      padding: '10px',
+      fontWeight: 'bold',
+      width: '420px',
+      marginTop: '5px',
+      marginBottom: '5px',
+      /*
+      color: '',
+      textAlign: '',
+      border: '',
+      margin: '',
+      display: '',
+      clear: '',
+      float: '',
+      paddingTop: '',
+      paddingRight: '',
+      paddingBottom: '',
+      paddingLeft: ''
+      */
+    }
+    const transferStyle={
+      textDecoration: 'overline underline',
+      border: '10px #F4BE41',
+      borderWidth: '10px',
+      backgroundColor: 'white',
+      textAlign: 'center',
+      fontSize: '40px',
+      color: '#3973B5'
+    }
+    const fieldset={
+      border: '2px solid #F4BE41'
+    }
+    const labelStyle={
+      border: "2px solid #383838",
+      borderTop: "2px solid red",
+      backgroundColor: "white"
+    }
+
     return(
       <div style={style} className="Transfer">
         <fieldset style={fieldset}>
