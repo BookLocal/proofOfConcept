@@ -108,6 +108,25 @@ class Home extends Component {
   }
 
   render() {
+    const containerStyle={
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gridAutoRow: '',
+      alignItems: 'start',
+      justifyItems: 'start',
+      /*
+      gridColumnStart: '',
+      gridColumnEnd: '',
+      gridRowStart: '',
+      gridRowEnd: '',
+      gridTemplateRows: '',
+      gridTemplateAreas: '',
+      gridColumnGap: '1em',
+      gridRowGap: '',
+      gridAutoFlow: ''
+      */
+}
+
     return(
       <main className="container">
         <div className="pure-g">
@@ -116,51 +135,53 @@ class Home extends Component {
             <p>The page is being modified to read and write to the Truffle testRpc.</p>
 
             // TODO: call data from blockchain here.
-            <Admins
-              getBalance={this.getBalance}
-              balance={balance}
-              getCeo={this.getCeo}
-              ceo={ceo}
-              getCfo={this.getCfo}
-              cfo={cfo}
-              getCoo={this.getCoo}
-              coo={coo}
-            />
-            <ChangeOfficersForm
-              getCfo={this.getCfo}
-              cfo={cfo}
-              getCoo={this.getCoo}
-              coo={coo}
-              getBalance={this.getBalance}
-            />
-            <TotalSupply
-              getTotalSupply={this.getTotalSupply}
-              totalSupply={totalSupply}
-            />
-            <RoomInfo
-              getRoomId={this.getRoomId}
-              roomId={roomId}
-              getRoomInfo={this.getRoomInfo}
-              hotelId={hotelId}
-              roomNumber={roomNumber}
-              minRentTime={minRentTime}
-              numBeds={numBeds}
-            />
-            <OwnerOf />
-            <Transfer />
-            <TransferFrom />
-            <Approve />
-            <AddRoomForm
-              getBalance={this.getBalance}
-              getTotalSupply={this.getTotalSupply}
-              getRoomId={this.getRoomId}
-              getRoomInfo={this.getRoomInfo}
-              addHotelId={this.state.addHotelId}
-              addRoomNumber={this.state.addRoomNumber}
-              addNumBeds={this.state.addNumBeds}
-              addRoom={this.addRoom}
-              transactionObject={this.transactionObject}
-            />
+            <div style={containerStyle} className="Container">
+              <Admins
+                getBalance={this.getBalance}
+                balance={balance}
+                getCeo={this.getCeo}
+                ceo={ceo}
+                getCfo={this.getCfo}
+                cfo={cfo}
+                getCoo={this.getCoo}
+                coo={coo}
+              />
+              <ChangeOfficersForm
+                getCfo={this.getCfo}
+                cfo={cfo}
+                getCoo={this.getCoo}
+                coo={coo}
+                getBalance={this.getBalance}
+              />
+              <TotalSupply
+                getTotalSupply={this.getTotalSupply}
+                totalSupply={totalSupply}
+              />
+              <RoomInfo
+                getRoomId={this.getRoomId}
+                roomId={roomId}
+                getRoomInfo={this.getRoomInfo}
+                hotelId={hotelId}
+                roomNumber={roomNumber}
+                minRentTime={minRentTime}
+                numBeds={numBeds}
+              />
+              <OwnerOf />
+              <Transfer />
+              <TransferFrom />
+              <Approve />
+              <AddRoomForm
+                getBalance={this.getBalance}
+                getTotalSupply={this.getTotalSupply}
+                getRoomId={this.getRoomId}
+                getRoomInfo={this.getRoomInfo}
+                addHotelId={this.state.addHotelId}
+                addRoomNumber={this.state.addRoomNumber}
+                addNumBeds={this.state.addNumBeds}
+                addRoom={this.addRoom}
+                transactionObject={this.transactionObject}
+              />
+            </div>
             <img id="loader" src='https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif' role="presentation"/>
             // end data call.
 

@@ -10,19 +10,24 @@ class RoomInfo extends Component{
   render(){
     const style={
       backgroundColor: '#4D4D4D',
-      padding: '20px',
+      padding: '10px',
       fontWeight: 'bold',
-      width: '450px',
-      border: '50px',
-      margin: '200px',
+      width: '420px',
       marginTop: '5px',
       marginBottom: '5px',
-      clear: 'both',
-      float: 'left',
-      paddingTop: '50px',
-      paddingRight: '50px',
-      paddingBottom: '50px',
-      paddingLeft: '50px'
+      /*
+      color: '',
+      textAlign: '',
+      border: '',
+      margin: '',
+      display: '',
+      clear: '',
+      float: '',
+      paddingTop: '',
+      paddingRight: '',
+      paddingBottom: '',
+      paddingLeft: ''
+      */
     }
     const roomStyle={
       textDecoration: 'overline underline',
