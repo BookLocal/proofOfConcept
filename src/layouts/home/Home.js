@@ -16,6 +16,7 @@ import Reserve from './Reserve.js';
 import Access from './Access.js';
 import Settle from './Settle.js';
 import CancelReservation from './Cancel-Reservation.js';
+import GetCurrentTime from './Get-Current-Time.js';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
@@ -152,6 +153,7 @@ class Home extends Component {
               minRentTime={minRentTime}
               numBeds={numBeds}
             />
+            <GetCurrentTime />
             <CheckAvailable />
             <Reserve />
             <CancelReservation />
