@@ -111,16 +111,17 @@ class Home extends Component {
     const containerStyle={
       display: 'grid',
       gridTemplateColumns: 'repeat(3, 1fr)',
-      gridAutoRow: '',
-      alignItems: 'start',
-      justifyItems: 'start',
+      gridAutoRow: '90px 90px 90px',
+      gridAutoColumn: '60px 60px 60px',
+      alignItems: '',
+      justifyItems: '',
+      gridTemplateAreas: "header header header header main main . sidebar footer footer footer footer",
       /*
       gridColumnStart: '',
       gridColumnEnd: '',
       gridRowStart: '',
       gridRowEnd: '',
       gridTemplateRows: '',
-      gridTemplateAreas: '',
       gridColumnGap: '1em',
       gridRowGap: '',
       gridAutoFlow: ''
