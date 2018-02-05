@@ -117,14 +117,16 @@ class Home extends Component {
   }
 
   render() {
-    const containerStyle={
+    const gridWrapper={
       display: 'grid',
-      gridTemplateColumns: 'repeat(3, 1fr)',
-      gridAutoRow: '90px 90px 90px',
-      gridAutoColumn: '60px 60px 60px',
+      gridTemplateColumns: 'repeat(3, 2fr)',
+      gridAutoRow: '60px 60px 60px',
+      gridAutoColumn: '90px 90px 90px',
+      gridAutoFlow: 'row',
       alignItems: 'start',
       justifyItems: '',
-      gridTemplateAreas: "header header header header main main . sidebar footer footer footer footer",
+      gridTemplateAreas: '',
+      alignContent: 'center',
       /*
       gridColumnStart: '',
       gridColumnEnd: '',
@@ -133,9 +135,9 @@ class Home extends Component {
       gridTemplateRows: '',
       gridColumnGap: '1em',
       gridRowGap: '',
-      gridAutoFlow: ''
       */
 }
+  
 
     return(
       <main className="container">
@@ -146,7 +148,7 @@ class Home extends Component {
 
             // TODO: call data from blockchain here.
 
-            <div style={containerStyle} className="Container">
+            <div style={gridWrapper} className="Container">
               <Admins
                 getBalance={this.getBalance}
                 balance={balance}
