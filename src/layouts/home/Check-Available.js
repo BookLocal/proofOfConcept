@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let tokenId, time, available;
+let available;
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
 
 let RRAbi = require('../../../abis/RoomRentingAbi.js');

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let reserve;
+let access;
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
 
 let RRAbi = require('../../../abis/RoomRentingAbi.js');
@@ -9,13 +9,12 @@ let RRAddress = '0x9fbda871d559710256a2502a2517b794b482db40';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 
-class Reserve extends Component{
+class Access extends Component{
   constructor(props){
     super(props)
     this.state = {
       tokenId : '',
-      start: '',
-      stop: '',
+      access : '',
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -30,24 +29,24 @@ class Reserve extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Reserve fired!");
-    reserve = RR.checkAvailable(this.state.tokenId, this.state.start, this.state.stop);
-    console.log(reserve);
+    console.log("Access fired!");
+    access = RR.checkAvailable(this.state.tokenId);
+    access = String(access);
+    console.log(access);
+    this.setState({
+      access: access,
+    });
   }
 
   render(){
     return(
-      <div className="Reserve">
+      <div className="Access">
         <fieldset>
-          <legend>Reserve Your Room</legend>
+          <legend>Access</legend>
             <label>Room Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
-              Start:
-              <input id="start" type="text" onChange={this.handleTextChange} value={this.state.start} />
-              Stop:
-              <input id="stop" type="text" onChange={this.handleTextChange} value={this.state.stop} />
-              <input id="search" type="submit" value="Reserve" onClick={this.handleSubmit} />
-              {this.state.availability}
+              <input id="search" type="submit" value="Gain Access" onClick={this.handleSubmit} />
+              {this.state.access}
             </label>
         </fieldset>
       </div>
@@ -55,4 +54,4 @@ class Reserve extends Component{
   }
 }
 
-export default Reserve
+export default Access
