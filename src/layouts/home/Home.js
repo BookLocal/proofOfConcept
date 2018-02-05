@@ -14,6 +14,8 @@ import BalanceOf from './Balance-Of.js';
 import CheckAvailable from './Check-Available.js';
 import Reserve from './Reserve.js';
 import Access from './Access.js';
+import Settle from './Settle.js';
+import CancelReservation from './Cancel-Reservation.js';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
@@ -152,7 +154,9 @@ class Home extends Component {
             />
             <CheckAvailable />
             <Reserve />
+            <CancelReservation />
             <Access />
+            <Settle />
             <OwnerOf />
             <BalanceOf />
             <Transfer />
