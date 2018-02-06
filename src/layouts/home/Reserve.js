@@ -36,16 +36,42 @@ class Reserve extends Component{
   }
 
   render(){
+    const style={
+      backgroundColor: '#4D4D4D',
+      padding: '10px',
+      fontWeight: 'bold',
+      width: '420px',
+      marginTop: '5px',
+      marginBottom: '5px',
+    }
+    const fieldset={
+      border: '2px solid #F4BE41'
+    }
+    const legendStyle={
+      textDecoration: 'overline underline',
+      border: '10px #F4BE41',
+      borderWidth: '10px',
+      backgroundColor: 'white',
+      textAlign: 'center',
+      fontSize: '40px',
+      color: '#3973B5'
+    }
+    const labelStyle={
+      border: "2px solid #383838",
+      borderTop: "2px solid red",
+      backgroundColor: "white",
+    }
     return(
-      <div className="Reserve">
-        <fieldset>
-          <legend>Reserve Your Room</legend>
-            <label>Room Id:
+      <div style={style} className="Reserve">
+        <fieldset style={fieldset}>
+          <legend style={legendStyle}>Reserve Your Room</legend>
+            <label style={labelStyle}>Room Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
-              Start:
+            <div style={labelStyle}> Start: </div>
               <input id="start" type="text" onChange={this.handleTextChange} value={this.state.start} />
-              Stop:
+            <div style={labelStyle}> Stop: </div>
               <input id="stop" type="text" onChange={this.handleTextChange} value={this.state.stop} />
+              <hr />
               <input id="search" type="submit" value="Reserve" onClick={this.handleSubmit} />
               {this.state.availability}
             </label>

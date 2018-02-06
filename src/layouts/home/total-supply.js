@@ -40,8 +40,7 @@ class TotalSupply extends Component{
     const propStyle={
       border: "2px solid #383838",
       borderTop: "2px solid red",
-      backgroundColor: "black",
-      color: 'white'
+      backgroundColor: "white",
     }
     const fieldset={
         border: '2px solid #F4BE41'

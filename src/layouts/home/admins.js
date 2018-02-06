@@ -58,8 +58,7 @@ class Admins extends Component{
     const ethStyle1={
       border: "2px solid #383838",
       borderTop: "2px solid red",
-      backgroundColor: "black",
-      color: 'white'
+      backgroundColor: "white",
     }
     const fieldset={
       border: '2px solid #F4BE41'
@@ -67,14 +66,12 @@ class Admins extends Component{
     const cooStyle={
       border: "2px solid #383838",
       borderTop: "2px solid red",
-      backgroundColor: "black",
-      color: 'white'
+      backgroundColor: "white",
     }
     const ethStyle2={
       border: "2px solid #383838",
       borderTop: "2px solid red",
-      backgroundColor: "black",
-      color: 'white'
+      backgroundColor: "white",
     }
     return(
       <div style={style}>

@@ -38,12 +38,38 @@ class BalanceOf extends Component{
   }
 
   render(){
+    const style={
+      backgroundColor: '#4D4D4D',
+      padding: '10px',
+      fontWeight: 'bold',
+      width: '420px',
+      marginTop: '5px',
+      marginBottom: '5px',
+    }
+    const fieldset={
+      border: '2px solid #F4BE41'
+    }
+    const legendStyle={
+      textDecoration: 'overline underline',
+      border: '10px #F4BE41',
+      borderWidth: '10px',
+      backgroundColor: 'white',
+      textAlign: 'center',
+      fontSize: '40px',
+      color: '#3973B5'
+    }
+    const labelStyle={
+      border: "2px solid #383838",
+      borderTop: "2px solid red",
+      backgroundColor: "white",
+    }
     return(
-      <div className="balanceOf">
-        <fieldset>
-          <legend>Balance Of</legend>
-            <label>Address:
+      <div style={style} className="balanceOf">
+        <fieldset style={fieldset}>
+          <legend style={legendStyle}>Balance Of</legend>
+            <label style={labelStyle}>Address:
               <input id="balanceOfSearchBox" type="text" onChange={this.handleTextChange} value={this.state.balanceOfSearchBox} />
+              <hr />
               <input id="search" type="submit" value="Search" onClick={this.handleSubmit} />
               {this.state.balanceOf}
             </label>
