@@ -5,7 +5,22 @@ import TotalSupply from './total-supply.js';
 import '../../App.css';
 import Web3 from 'web3';
 import AddRoomForm from './Add-Room.js';
-import ChangeOfficersForm from './change-admins.js'
+import ChangeOfficersForm from './change-admins.js';
+import OwnerOf from './ownerOf.js';
+import Transfer from './Transfer.js';
+import TransferFrom from './Transfer-From.js';
+import Approve from './Approve.js';
+import BalanceOf from './Balance-Of.js';
+import CheckAvailable from './Check-Available.js';
+import Reserve from './Reserve.js';
+import Access from './Access.js';
+import Settle from './Settle.js';
+import CancelReservation from './Cancel-Reservation.js';
+import GetCurrentTime from './Get-Current-Time.js';
+import ChangeMinRental from './Change-Min-Rental.js';
+import ChangeNumBeds from './Change-Num-Beds.js';
+import TextInput from '@aragon/ui';
+import Field from '@aragon/ui';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
@@ -18,7 +33,7 @@ let RB = web3.eth.contract(RBAbi).at(RBAddress);
 // let RO = web3.eth.contract(ROAbi).at(ROAddress);
 
 let RRAbi = require('../../../abis/RoomRentingAbi.js');
-let RRAddress = '0x9fbda871d559710256a2502a2517b794b482db40';
+let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 let balance = web3.fromWei(web3.eth.getBalance(web3.eth.coinbase)).toString();
@@ -28,6 +43,7 @@ let coo = RR.coo();
 let totalSupply = RR.totalSupply().toString();
 console.log("totalSupply: " + totalSupply + " " + typeof totalSupply);
 // @dev add error handling here: if there are no rooms this method will fail.
+// TODO: Refactor such that we don't use RB, just RR.
 let roomInfo = RB.rooms(Number(totalSupply) - 1);
 let roomId = Number(totalSupply) - 1;
 let hotelId = String(roomInfo[0]).split(',');
@@ -101,8 +117,37 @@ class Home extends Component {
       console.log("error at Home.js getroomInfo()");
     }
   }
+  textInput = () => (
+    <TextInput type="text" />
+  )
+  fieldLabel = () => (
+    <Field label="Enter name here:">
+      <input />
+    </Field>
+  )
 
   render() {
+    const gridWrapper={
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 2fr)',
+      gridAutoRow: '60px 60px 60px',
+      gridAutoColumn: '90px 90px 90px',
+      gridAutoFlow: 'row',
+      alignItems: 'start',
+      justifyItems: '',
+      gridTemplateAreas: '',
+      alignContent: 'center',
+      /*
+      gridColumnStart: '',
+      gridColumnEnd: '',
+      gridRowStart: '',
+      gridRowEnd: '',
+      gridTemplateRows: '',
+      gridColumnGap: '1em',
+      gridRowGap: '',
+      */
+}
+
     return(
       <main className="container">
         <div className="pure-g">
@@ -111,47 +156,63 @@ class Home extends Component {
             <p>The page is being modified to read and write to the Truffle testRpc.</p>
 
             // TODO: call data from blockchain here.
-            <Admins
-              getBalance={this.getBalance}
-              balance={balance}
-              getCeo={this.getCeo}
-              ceo={ceo}
-              getCfo={this.getCfo}
-              cfo={cfo}
-              getCoo={this.getCoo}
-              coo={coo}
-            />
-            <ChangeOfficersForm
-              getCfo={this.getCfo}
-              cfo={cfo}
-              getCoo={this.getCoo}
-              coo={coo}
-              getBalance={this.getBalance}
-            />
-            <TotalSupply
-              getTotalSupply={this.getTotalSupply}
-              totalSupply={totalSupply}
-            />
-            <RoomInfo
-              getRoomId={this.getRoomId}
-              roomId={roomId}
-              getRoomInfo={this.getRoomInfo}
-              hotelId={hotelId}
-              roomNumber={roomNumber}
-              minRentTime={minRentTime}
-              numBeds={numBeds}
-            />
-            <AddRoomForm
-              getBalance={this.getBalance}
-              getTotalSupply={this.getTotalSupply}
-              getRoomId={this.getRoomId}
-              getRoomInfo={this.getRoomInfo}
-              addHotelId={this.state.addHotelId}
-              addRoomNumber={this.state.addRoomNumber}
-              addNumBeds={this.state.addNumBeds}
-              addRoom={this.addRoom}
-              transactionObject={this.transactionObject}
-            />
+
+            <div style={gridWrapper} className="Container">
+              <Admins
+                getBalance={this.getBalance}
+                balance={balance}
+                getCeo={this.getCeo}
+                ceo={ceo}
+                getCfo={this.getCfo}
+                cfo={cfo}
+                getCoo={this.getCoo}
+                coo={coo}
+              />
+              <ChangeOfficersForm
+                getCfo={this.getCfo}
+                cfo={cfo}
+                getCoo={this.getCoo}
+                coo={coo}
+                getBalance={this.getBalance}
+              />
+              <TotalSupply
+                getTotalSupply={this.getTotalSupply}
+                totalSupply={totalSupply}
+              />
+              <RoomInfo
+                getRoomId={this.getRoomId}
+                roomId={roomId}
+                getRoomInfo={this.getRoomInfo}
+                hotelId={hotelId}
+                roomNumber={roomNumber}
+                minRentTime={minRentTime}
+                numBeds={numBeds}
+              />
+              <OwnerOf />
+              <Transfer />
+              <TransferFrom />
+              <Approve />
+              <ChangeMinRental />
+              <AddRoomForm
+                getBalance={this.getBalance}
+                getTotalSupply={this.getTotalSupply}
+                getRoomId={this.getRoomId}
+                getRoomInfo={this.getRoomInfo}
+                addHotelId={this.state.addHotelId}
+                addRoomNumber={this.state.addRoomNumber}
+                addNumBeds={this.state.addNumBeds}
+                addRoom={this.addRoom}
+                transactionObject={this.transactionObject}
+              />
+              <ChangeNumBeds />
+              <Access />
+              <Settle />
+              <BalanceOf />
+              <GetCurrentTime />
+              <CheckAvailable />
+              <Reserve />
+              <CancelReservation />
+            </div>
             <img id="loader" src='https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif' role="presentation"/>
             // end data call.
 
