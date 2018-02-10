@@ -1,4 +1,7 @@
-pragma solidity ^0.4.11;
+pragma solidity ^0.4.17;
+
+import './RoomOwnership.sol';
+
 
 // @title ERC809 draft
 // @author stevenLee <steven@booklocal.in>
@@ -27,6 +30,10 @@ pragma solidity ^0.4.11;
 
     /** METHODS ***
 
+    ### Temporary for EthMemphis ###
+    addAccessCode(bytes32)................add new access code for ethMemphis aplicants
+    getNumberOfAccessCodes()..............see total outstanding access codes
+
     ### Non-Fungible ###
     totalSupply().........................get total supply
     ownerOf(tokenId)......................get owner of specific token
@@ -50,311 +57,100 @@ pragma solidity ^0.4.11;
     changeNumBeds(tokenId, numBeds).......change number of beds
     */
 
-// @title PermissionedAccess
-// @dev PermissionedAccess provides specific access controls
-//          anyone in the administrative team.
-contract PermissionedAccess {
-    // Basic permission functionality.
-    // Doesn't do anything with pauses but probably should to handle bugs
-
-    // initalize address types
-    address public ceo;
-    address public cfo;
-    address public coo;
-
-    // allow contracts to pauses
-    bool public paused = false;
-
-    // modifier for only ceo
-    modifier onlyCEO() {
-        require(msg.sender == ceo);
-        _;
-    }
-
-    // modifier for only cfo
-    modifier onlyCFO() {
-        require(msg.sender == cfo);
-        _;
-    }
-
-    // modifier for only controls
-    modifier onlyCOO() {
-        require(msg.sender == coo);
-        _;
-    }
-
-    modifier onlyCLevel() {
-
-        require(
-            msg.sender == ceo ||
-            msg.sender == cfo ||
-            msg.sender == coo
-        );
-        _;
-    }
-
-    modifier whenPaused {
-        require(paused);
-        _;
-    }
-
-    modifier whenNotPaused {
-        require(!paused);
-        _;
-    }
-
-    function PermissionedAccess() public {
-        ceo = msg.sender;
-    }
-
-    // change ceo
-    // only ceo can change ceo
-    function setCEO(address _newCEO) external onlyCEO {
-        require(_newCEO != address(0));
-        ceo = _newCEO;
-    }
-
-    // change cfo
-    // only ceo can change cfo
-    function setCFO(address _newCFO) external onlyCEO {
-        require(_newCFO != address(0));
-        cfo = _newCFO;
-    }
-
-    // change coo
-    // only ceo can change coo
-    function setCOO(address _newCOO) external onlyCEO {
-        require(_newCOO != address(0));
-        coo = _newCOO;
-    }
-
-    // pause contract
-    function pause() external onlyCLevel whenNotPaused {
-        paused = true;
-    }
-
-    // unpause, only ceo
-    function unPause() external onlyCEO whenPaused {
-        paused = false;
-    }
-}
-
-// Room base defines room attributes, stores the rooms, and adds new rooms
-contract RoomBase is PermissionedAccess {
-
-    /**
-    Define variables
-    */
-
-    // @dev main Room strucutre
-    struct Room {
-
-        // owner
-        address owner;
-
-        // renter
-        address renter;
-
-        // min rental
-        uint256 minRentTime;
-
-        // identify number of beds
-        uint16 numBeds;
-    }
-
-    // @dev init array of Room structs, called rooms
-    Room[] public rooms;
-
-    // @dev default minimum unit of rent is one day (in seconds)
-    uint256 public MIN_RENT_TIME = 3600*24;
-
-    // @dev mapping for "tokenId" assignment to owner
-    mapping (uint256 => address) public roomOwners_byIndex;
-
-    // @dev mapping to store total rooms owned
-    mapping (address => uint256) public numRooms_byOwner;
-
-    // @dev mapping for ERC721 approval to transfer
-    mapping (uint256 => address) public transferApproval_byIndex;
-
-    // @dev mapping for basic reservations
-    mapping (uint256 => mapping (uint256 => address)) public reservations;
-
-    /**
-    Define Functions
-    */
-    function addRoom(uint16 _numBeds) external onlyCLevel returns (uint256) {
-
-        address _owner = msg.sender;
-        address _renter = address(0);
-        uint256 _min = MIN_RENT_TIME;
-
-        // create new Room struct and store to memory
-        Room memory _room = Room({
-            owner: _owner,
-            renter: _renter,
-            minRentTime: _min,
-            numBeds: _numBeds
-        });
-
-        // push new room to rooms array
-        uint256 roomId = rooms.push(_room) - 1;
-
-        _transfer(0, _owner, roomId);
-
-        return roomId;
-    }
-
-    function getNumBeds(uint256 _tokenId) external view returns (uint16 numBeds) {
-        Room storage room = rooms[_tokenId];
-
-        numBeds = room.numBeds;
-    }
-
-    function getRoomInfo(uint256 _tokenId)
-        external
-        view
-        returns (address owner, address renter, uint256 minRentTime, uint16 numBeds)
-        {
-        Room storage room = rooms[_tokenId];
-
-        owner = room.owner;
-        renter = room.renter;
-        minRentTime = room.minRentTime;
-        numBeds = room.numBeds;
-    }
-
-    function changeMinRental(uint256 _tokenId, uint256 _newMin) external {
-        Room storage room = rooms[_tokenId];
-        require(msg.sender == room.owner);
-        room.minRentTime = _newMin;
-    }
-
-    function changeNumBeds(uint256 _tokenId, uint16 _beds) external {
-        Room storage room = rooms[_tokenId];
-        require(msg.sender == room.owner);
-        room.numBeds = _beds;
-    }
-
-    // get time
-    function getCurrentTime(uint256 _tokenId) external view returns (uint256 _time) {
-        Room storage room = rooms[_tokenId];
-        uint256 minRent = room.minRentTime;
-        _time = now/minRent;
-    }
-
-    // @dev internally transfer token to new owner
-    function _transfer(address _from, address _to, uint256 _tokenId) internal {
-
-        numRooms_byOwner[_to] ++;
-        roomOwners_byIndex[_tokenId] = _to;
-
-        Room storage r = rooms[_tokenId];
-        r.owner = _to;
-
-        if (_from != address(0)) {
-            numRooms_byOwner[_from]--;
-        }
-    }
-}
-
-// Room ownership adds ERC-721 interface to the room base
-contract RoomOwnership is RoomBase {
-
-    /**
-    Define ERC-721 functions
-    */
-
-    // @dev find number of rooms (i.e. number of tokens)
-    function totalSupply() external view returns(uint256 supply){
-        supply = rooms.length;
-    }
-
-    // @dev find owner of specific room
-    function ownerOf(uint256 _tokenId) external view returns (address) {
-        address owner = roomOwners_byIndex[_tokenId];
-        require(owner != address(0));
-        return owner;
-    }
-
-    function ownerOf_2(uint256 _tokenId) external view returns (address owner) {
-        Room storage r = rooms[_tokenId];
-        owner = r.owner;
-    }
-
-    // @dev find total rooms owned by an address
-    function balanceOf(address _owner) public view returns (uint256 count) {
-        count = numRooms_byOwner[_owner];
-        return(count);
-    }
-
-    // @dev transfer
-    function transfer(address _to, uint256 _tokenId) external {
-
-        // require _to isn't something stupid
-        require(_to != address(0));
-        require(_to != address(this));
-
-        // make sure that the message sender actually owns token
-        require(_owns(msg.sender, _tokenId));
-
-        // transfer
-        _transfer(msg.sender, _to, _tokenId);
-    }
-
-    // @dev approval for room transfers
-    function approve(address _to, uint256 _tokenId) external {
-        require(_owns(msg.sender, _tokenId));
-        _approve(_tokenId, _to);
-    }
-
-    // @dev transfer from approved address
-    function transferFrom(address _from, address _to, uint256 _tokenId) external {
-        require (_to != address(0));
-        require (_to != address(this));
-        require (_approvedFor(msg.sender, _tokenId));
-        require (_owns(_from, _tokenId));
-
-        _transfer(_from, _to, _tokenId);
-    }
-
-    // @dev internally confirm owner of token
-    function _owns(address _claimant, uint256 _tokenId) internal view returns(bool) {
-        return roomOwners_byIndex[_tokenId] == _claimant;
-    }
-
-    // @dev internal approval function
-    function _approve(uint256 _tokenId, address _approved) internal {
-        transferApproval_byIndex[_tokenId] = _approved;
-    }
-
-    // @dev internal check approval
-    function _approvedFor(address _claimer, uint256 _tokenId) internal view returns(bool) {
-        return transferApproval_byIndex[_tokenId] == _claimer;
-    }
-
-    // @dev internal check if reservation date is _isFuture
-    function _isFuture(uint256 _time) internal view returns (bool future) {
-        uint256 _now = now/MIN_RENT_TIME;
-
-        return _time>_now;
-    }
-}
-
 // room renting adds ERC-809 renting interface to room ownership
 contract RoomRenting is RoomOwnership {
 
-    // constructor sets the ceo of bookLocal
+    /**
+        STORAGE
+    */
+
+    bytes32[] accessCodes;
+
+    /**
+        CONSTRUCTOR
+    */
+
+    //sets the ceo of bookLocal
     function RoomRenting() public {
         ceo = msg.sender;
     }
 
     /**
-    Define ERC-809 functions
+        MODIFIERS
+    */
+
+    // only let a guests with valid access code reserve the room
+    modifier onlyEthMemphis(bytes32 _accessCode) {
+        require(_validAccessCode(_accessCode));
+        _;
+    }
+
+    /**
+        TEMPORARY FUNCTIONS
+    */
+
+    /// *** ADD ACCESS CODE *** \\\
+    /// only left here for use at ETH memephis
+    /// will remove for future versions
+    function addAccessCode(bytes32 _accessCode) external onlyCLevel {
+        accessCodes.push(_accessCode);
+    }
+
+    function getNumberOfAccessCodes() external view returns (uint256 _codesLeft) {
+        _codesLeft = accessCodes.length;
+    }
+
+    function _validAccessCode(bytes32 _accessCode) internal view returns (bool){
+        for (uint i=0; i<accessCodes.length; i++) {
+            if (_accessCode == accessCodes[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function _removeAccessCode(bytes32 _accessCode) internal returns(bool) {
+
+        uint256 _index;
+        bool _valid = false;
+
+        for (uint i=0; i<accessCodes.length; i++) {
+            if (_accessCode == accessCodes[i]) {
+                _index = i;
+                _valid = true;
+            }
+        }
+
+        if (_valid) {
+            _remove(_index);
+        } else {
+            return false;
+        }
+    }
+
+    function _remove(uint256 _index) internal returns(bool) {
+        require(_index <= accessCodes.length-1);
+
+        for (uint i = _index; i<accessCodes.length-1; i++){
+            accessCodes[i] = accessCodes[i+1];
+        }
+        delete accessCodes[accessCodes.length-1];
+        accessCodes.length--;
+        return true;
+    }
+
+    /**
+       ERC-809 FUNCTIONS
     */
 
     // @dev reserve future access to an asset
-    function reserve(uint256 _tokenId, uint256 _start, uint256 _stop) external returns (bool){
+    function reserve(uint256 _tokenId, uint256 _start, uint256 _stop, bytes32 _accessCode)
+
+    external
+    onlyEthMemphis(_accessCode)
+
+    returns (bool)
+    {
         address guest = msg.sender;
 
         // comment out for debug and testing
@@ -372,6 +168,8 @@ contract RoomRenting is RoomOwnership {
         for (i = _start; i <= _stop; i ++) {
             reservations[_tokenId][i] = guest;
         }
+
+        _removeAccessCode(_accessCode);
 
         return true;
     }
@@ -426,6 +224,10 @@ contract RoomRenting is RoomOwnership {
     function checkAvailable(uint256 _tokenId, uint256 _date) external view returns (bool) {
         return reservations[_tokenId][_date] == address(0);
     }
+
+    /**
+        INTERNAL FUNCTIONS
+    */
 
     // @dev internal check if reservation date is _isFuture
     function _isFuture(uint256 _time) internal view returns (bool future) {
