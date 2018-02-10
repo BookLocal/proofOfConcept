@@ -205,6 +205,12 @@ contract RoomBase is PermissionedAccess {
         return roomId;
     }
 
+    function getNumBeds(uint256 _tokenId) external view returns (uint16 numBeds) {
+        Room storage room = rooms[_tokenId];
+
+        numBeds = room.numBeds;
+    }
+
     function getRoomInfo(uint256 _tokenId)
         external
         view
