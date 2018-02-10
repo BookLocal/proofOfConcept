@@ -33,7 +33,7 @@ let RB = web3.eth.contract(RBAbi).at(RBAddress);
 // let RO = web3.eth.contract(ROAbi).at(ROAddress);
 
 let RRAbi = require('../../../abis/RoomRentingAbi.js');
-let RRAddress = '0x9fbda871d559710256a2502a2517b794b482db40';
+let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 let balance = web3.fromWei(web3.eth.getBalance(web3.eth.coinbase)).toString();
