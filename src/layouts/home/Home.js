@@ -19,6 +19,8 @@ import CancelReservation from './Cancel-Reservation.js';
 import GetCurrentTime from './Get-Current-Time.js';
 import ChangeMinRental from './Change-Min-Rental.js';
 import ChangeNumBeds from './Change-Num-Beds.js';
+import TextInput from '@aragon/ui';
+import Field from '@aragon/ui';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
@@ -115,6 +117,14 @@ class Home extends Component {
       console.log("error at Home.js getroomInfo()");
     }
   }
+  textInput = () => (
+    <TextInput type="text" />
+  )
+  fieldLabel = () => (
+    <Field label="Enter name here:">
+      <input />
+    </Field>
+  )
 
   render() {
     const gridWrapper={
@@ -137,7 +147,6 @@ class Home extends Component {
       gridRowGap: '',
       */
 }
-  
 
     return(
       <main className="container">

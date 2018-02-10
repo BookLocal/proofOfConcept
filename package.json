@@ -49,20 +49,24 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "@aragon/ui": "^0.4.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",
     "react-router": "^3.0.2",
     "react-router-redux": "^4.0.7",
+    "react-scripts": "^1.1.1",
     "redux": "^3.6.0",
     "redux-auth-wrapper": "^1.0.0",
     "redux-thunk": "^2.2.0",
+    "styled-components": "^3.1.6",
     "uport-connect": "^0.6.1"
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "sync-assets": "sync-files $(dirname $(node -p 'require.resolve(\"@aragon/ui\")')) public/aragon-ui",
+    "build": "npm run sync-assets && react-scripts build",
+    "start": "npm run sync-assets && react-scripts start"
   },
   "jest": {
     "collectCoverageFrom": [
