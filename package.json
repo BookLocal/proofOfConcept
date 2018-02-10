@@ -63,10 +63,10 @@
     "uport-connect": "^0.6.1"
   },
   "scripts": {
-    "test": "node scripts/test.js --env=jsdom",
     "sync-assets": "sync-files $(dirname $(node -p 'require.resolve(\"@aragon/ui\")')) public/aragon-ui",
-    "build": "npm run sync-assets && react-scripts build",
-    "start": "npm run sync-assets && react-scripts start"
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js --env=jsdom"
   },
   "jest": {
     "collectCoverageFrom": [
