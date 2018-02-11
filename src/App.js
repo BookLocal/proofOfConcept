@@ -43,6 +43,8 @@ class App extends Component {
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal">
           <Link to="/" className="pure-menu-heading pure-menu-link">BookLocal</Link>
+          <Link to="/guest" className="pure-menu-heading pure-menu-link">GuestView</Link>
+          <Link to="/ethmemphis" className="pure-menu-heading pure-menu-link">ETHMemphis</Link>
           <ul className="pure-menu-list navbar-right">
             <OnlyGuestLinks />
             <OnlyAuthLinks />
