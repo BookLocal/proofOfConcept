@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
-import RoomInfo from './room-details.js'
-import TotalSupply from './total-supply.js';
+import RoomInfo from '../../components/room-details.js';
+import TotalSupply from '../../components/total-supply.js';
 import '../../App.css';
 import Web3 from 'web3';
-import OwnerOf from './ownerOf.js';
-import Approve from './Approve.js';
-import CheckAvailable from './Check-Available.js';
-import Reserve from './Reserve.js';
-import Access from './Access.js';
-import Settle from './Settle.js';
-import CancelReservation from './Cancel-Reservation.js';
-import GetCurrentTime from './Get-Current-Time.js';
+import OwnerOf from '../../components/ownerOf.js';
+import Approve from '../../components/Approve.js';
+import CheckAvailable from '../../components/Check-Available.js';
+import Reserve from '../../components/Reserve.js';
+import Access from '../../components/Access.js';
+import Settle from '../../components/Settle.js';
+import CancelReservation from '../../components/Cancel-Reservation.js';
+import GetCurrentTime from '../../components/Get-Current-Time.js';
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
 
