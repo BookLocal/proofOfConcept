@@ -1,24 +1,16 @@
 import React, { Component } from 'react';
-import Admins from './admins.js'
 import RoomInfo from './room-details.js'
 import TotalSupply from './total-supply.js';
 import '../../App.css';
 import Web3 from 'web3';
-import AddRoomForm from './Add-Room.js';
-import ChangeOfficersForm from './change-admins.js';
 import OwnerOf from './ownerOf.js';
-import Transfer from './Transfer.js';
-import TransferFrom from './Transfer-From.js';
 import Approve from './Approve.js';
-import BalanceOf from './Balance-Of.js';
 import CheckAvailable from './Check-Available.js';
 import Reserve from './Reserve.js';
 import Access from './Access.js';
 import Settle from './Settle.js';
 import CancelReservation from './Cancel-Reservation.js';
 import GetCurrentTime from './Get-Current-Time.js';
-import ChangeMinRental from './Change-Min-Rental.js';
-import ChangeNumBeds from './Change-Num-Beds.js';
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
 
@@ -53,7 +45,7 @@ let numBeds = String(roomInfo[3]).split(',');
 
 web3.eth.defaultAccount = web3.eth.accounts[0];
 
-class Home extends Component {
+class GuestView extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -158,23 +150,7 @@ class Home extends Component {
             // TODO: call data from blockchain here.
 
             <div style={gridWrapper} className="Container">
-              <Admins
-                getBalance={this.getBalance}
-                balance={balance}
-                getCeo={this.getCeo}
-                ceo={ceo}
-                getCfo={this.getCfo}
-                cfo={cfo}
-                getCoo={this.getCoo}
-                coo={coo}
-              />
-              <ChangeOfficersForm
-                getCfo={this.getCfo}
-                cfo={cfo}
-                getCoo={this.getCoo}
-                coo={coo}
-                getBalance={this.getBalance}
-              />
+
               <TotalSupply
                 getTotalSupply={this.getTotalSupply}
                 totalSupply={totalSupply}
@@ -189,25 +165,15 @@ class Home extends Component {
                 numBeds={numBeds}
               />
               <OwnerOf />
-              <Transfer />
-              <TransferFrom />
+
+
               <Approve />
-              <ChangeMinRental />
-              <AddRoomForm
-                getBalance={this.getBalance}
-                getTotalSupply={this.getTotalSupply}
-                getRoomId={this.getRoomId}
-                getRoomInfo={this.getRoomInfo}
-                addHotelId={this.state.addHotelId}
-                addRoomNumber={this.state.addRoomNumber}
-                addNumBeds={this.state.addNumBeds}
-                addRoom={this.addRoom}
-                transactionObject={this.transactionObject}
-              />
-              <ChangeNumBeds />
+
+
+
               <Access />
               <Settle />
-              <BalanceOf />
+
               <GetCurrentTime />
               <CheckAvailable />
               <Reserve />
@@ -242,4 +208,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default GuestView

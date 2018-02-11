@@ -11,6 +11,7 @@ import App from './App'
 import Home from './layouts/home/Home'
 import Dashboard from './layouts/dashboard/Dashboard'
 import Profile from './user/layouts/profile/Profile'
+import GuestView from './layouts/guests/Guest-View.js'
 
 // Redux Store
 import store from './store'
@@ -25,6 +26,7 @@ ReactDOM.render((
             <IndexRoute component={Home} />
             <Route path="dashboard" component={UserIsAuthenticated(Dashboard)} />
             <Route path="profile" component={UserIsAuthenticated(Profile)} />
+            <Route path="guest" component={GuestView}/>
           </Route>
         </AragonApp>
       </Router>
