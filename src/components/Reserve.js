@@ -16,6 +16,7 @@ class Reserve extends Component{
       tokenId : '',
       start: '',
       stop: '',
+      accessCode: ''
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -31,7 +32,14 @@ class Reserve extends Component{
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("Reserve fired!");
-    reserve = RR.reserve(this.state.tokenId, this.state.start, this.state.stop,{from: web3.eth.accounts[0], gas: 3000000});
+    console.log("("+Number(this.state.tokenId)+","+Number(this.state.start)+","+Number(this.state.stop)+","+String(this.state.accessCode)+",{from: "+web3.eth.accounts[0]+", gas: 3000000}");
+    reserve = RR.reserve(
+      Number(this.state.tokenId),
+      Number(this.state.start),
+      Number(this.state.stop),
+      String(this.state.accessCode),
+      {from: web3.eth.accounts[0], gas: 3000000}
+    );
     console.log(reserve);
   }
 
@@ -71,10 +79,12 @@ class Reserve extends Component{
               <input id="start" type="text" onChange={this.handleTextChange} value={this.state.start} />
             <div style={labelStyle}> Stop: </div>
               <input id="stop" type="text" onChange={this.handleTextChange} value={this.state.stop} />
-              <hr />
-              <input id="search" type="submit" value="Reserve" onClick={this.handleSubmit} />
-              {this.state.availability}
-            </label>
+            <div style={labelStyle}> Access Code: </div>
+              <input id="accessCode" type="text" onChange={this.handleTextChange} value={this.state.accessCode} />
+            <hr />
+            <input id="search" type="submit" value="Reserve" onClick={this.handleSubmit} />
+            {this.state.availability}
+          </label>
         </fieldset>
       </div>
     )
