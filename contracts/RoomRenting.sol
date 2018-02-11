@@ -45,7 +45,7 @@ import './RoomOwnership.sol';
     ### Renting ###
     checkAvailable(tokenId, time).........check future availability of token
     getRoomInfo(tokenId)..................get information about the room
-    reserve(tokenId, start, stop).........reserve future access to token
+    reserve(tokenId, start, stop, accessCode).........reserve future access to token
     access(tokenId).......................access the token
     settle(tokenId).......................remove access and settle funds
     cancelReservation.....................cancel reservation
