@@ -12,6 +12,7 @@ import Home from './layouts/home/Home'
 import Dashboard from './layouts/dashboard/Dashboard'
 import Profile from './user/layouts/profile/Profile'
 import GuestView from './layouts/guests/Guest-View.js'
+import EthMemphis from './layouts/EthMemphis-Reservations/EthMemphis-Reservations.js'
 
 // Redux Store
 import store from './store'
@@ -27,6 +28,7 @@ ReactDOM.render((
             <Route path="dashboard" component={UserIsAuthenticated(Dashboard)} />
             <Route path="profile" component={UserIsAuthenticated(Profile)} />
             <Route path="guest" component={GuestView}/>
+            <Route path="ethmemphis" component={EthMemphis}/>
           </Route>
         </AragonApp>
       </Router>
