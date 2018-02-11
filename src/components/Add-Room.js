@@ -11,7 +11,7 @@ let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 // let ROAddress = '0x4e71920b7330515faf5ea0c690f1ad06a85fb60c';
 // let RO = web3.eth.contract(ROAbi).at(ROAddress);
 
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
+let RRAbi = require('../../abis/RoomRentingAbi.js');
 let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 

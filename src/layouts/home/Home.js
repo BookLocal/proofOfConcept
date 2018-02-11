@@ -13,7 +13,7 @@ import Approve from './Approve.js';
 import BalanceOf from './Balance-Of.js';
 import CheckAvailable from './Check-Available.js';
 import Reserve from './Reserve.js';
-import Access from './Access.js';
+import Access from '../../components/Access.js';
 import Settle from './Settle.js';
 import CancelReservation from './Cancel-Reservation.js';
 import GetCurrentTime from './Get-Current-Time.js';
