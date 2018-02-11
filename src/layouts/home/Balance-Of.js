@@ -14,7 +14,7 @@ class BalanceOf extends Component{
     super(props)
     this.state = {
       balanceOfSearchBox : '',
-      balanceOf : 0,
+      balanceOf :'', 
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
