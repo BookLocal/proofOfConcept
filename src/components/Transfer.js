@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let access;
-let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
+let RRAbi = require('../../abis/RoomRentingAbi.js');
 let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 
-class Access extends Component{
+class Transfer extends Component{
   constructor(props){
     super(props)
     this.state = {
+      transferTo : '',
       tokenId : '',
-      access : '',
+      ownerOf : '',
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -29,16 +29,12 @@ class Access extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Access fired!");
-    access = RR.checkAvailable(this.state.tokenId);
-    access = String(access);
-    console.log(access);
-    this.setState({
-      access: access,
-    });
+    console.log("Transfer fired!");
+    RR.transfer(this.state.transferTo, this.state.tokenId);
   }
 
   render(){
+
     const style={
       backgroundColor: '#4D4D4D',
       padding: '10px',
@@ -46,11 +42,21 @@ class Access extends Component{
       width: '420px',
       marginTop: '5px',
       marginBottom: '5px',
+      /*
+      color: '',
+      textAlign: '',
+      border: '',
+      margin: '',
+      display: '',
+      clear: '',
+      float: '',
+      paddingTop: '',
+      paddingRight: '',
+      paddingBottom: '',
+      paddingLeft: ''
+      */
     }
-    const fieldset={
-      border: '2px solid #F4BE41'
-    }
-    const legendStyle={
+    const transferStyle={
       textDecoration: 'overline underline',
       border: '10px #F4BE41',
       borderWidth: '10px',
@@ -59,20 +65,27 @@ class Access extends Component{
       fontSize: '40px',
       color: '#3973B5'
     }
+    const fieldset={
+      border: '2px solid #F4BE41'
+    }
     const labelStyle={
       border: "2px solid #383838",
       borderTop: "2px solid red",
-      backgroundColor: "white",
+      backgroundColor: "white"
     }
+
     return(
-      <div style={style} className="Access">
+      <div style={style} className="Transfer">
         <fieldset style={fieldset}>
-          <legend style={legendStyle}>Access</legend>
-            <label style={labelStyle}>Room Id:
+          <legend style={transferStyle}>Transfer</legend>
+            <label>
+          <div style={labelStyle}> Transfer to address: </div>
+              <input id="transferTo" type="text" onChange={this.handleTextChange} value={this.state.transferTo} />
+          <div style={labelStyle}> Transfer Token Id: </div>
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
               <hr />
-              <input id="search" type="submit" value="Gain Access" onClick={this.handleSubmit} />
-              {this.state.access}
+              <input id="search" type="submit" value="Transfer" onClick={this.handleSubmit} />
+              {this.state.ownerOf}
             </label>
         </fieldset>
       </div>
@@ -80,4 +93,4 @@ class Access extends Component{
   }
 }
 
-export default Access
+export default Transfer

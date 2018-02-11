@@ -3,27 +3,27 @@ import Web3 from 'web3';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
-let RRAddress = '0x9fbda871d559710256a2502a2517b794b482db40';
+// let RBAbi = require('../../../abis/RoomBaseAbi.js');
+// let RBAddress = '0x8273e4b8ed6c78e252a9fca5563adfcc75c91b2a';
+// let RB = web3.eth.contract(RBAbi).at(RBAddress);
+
+// let ROAbi = require('../../../abis/RoomOwnershipAbi.js');
+// let ROAddress = '0x4e71920b7330515faf5ea0c690f1ad06a85fb60c';
+// let RO = web3.eth.contract(ROAbi).at(ROAddress);
+
+let RRAbi = require('../../abis/RoomRentingAbi.js');
+let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
-class ChangeOfficersForm extends Component{
+class AddRoomForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      cfo : this.props.cfo,
-      coo : this.props.coo,
+      numBeds : '',
     }
     this.handleTextChange=this.handleTextChange.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
   }
-
-  // componentWillMount(){
-  //   this.setState() = {
-  //     cfo : this.props.cfo,
-  //     coo : this.props.coo,
-  //   }
-  // }
 
   handleTextChange = (event) => {
     if(this.state[event.target.id] !== undefined){
@@ -34,15 +34,16 @@ class ChangeOfficersForm extends Component{
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("handleSubmit fired!");
-    let cfo = String(this.state.cfo);
-    let coo = String(this.state.coo);
-    RR.setCFO(cfo, {from: web3.eth.accounts[0], gas: 3000000});
-    console.log("RR.setCFO fired!");
-    RR.setCOO(coo, {from: web3.eth.accounts[0], gas: 3000000});
-    console.log("RR.setCOO fired!");
-    this.props.getCfo();
-    this.props.getCoo();
+    let numBeds = Number(this.state.numBeds);
+    RR.addRoom(numBeds, {from: web3.eth.accounts[0], gas: 3000000});
+    console.log("RR.addRoom fired!");
+    this.setState({
+      numBeds : '',
+    })
     this.props.getBalance();
+    this.props.getTotalSupply();
+    this.props.getRoomId();
+    this.props.getRoomInfo();
   }
 
   render() {
@@ -67,16 +68,10 @@ class ChangeOfficersForm extends Component{
       paddingLeft: ''
       */
     }
-    const cooStyle={
-      border: "2px solid #383838",
-      borderTop: "2px solid red",
-      backgroundColor: "white",
-      textAlign: 'left'
-    }
     const fieldset={
-        border: '2px solid #F4BE41'
+      border: '2px solid #F4BE41'
     }
-    const  officerStyle={
+    const addStyle={
       textDecoration: 'overline underline',
       border: '10px #F4BE41',
       borderWidth: '10px',
@@ -85,29 +80,24 @@ class ChangeOfficersForm extends Component{
       fontSize: '40px',
       color: '#3973B5'
     }
-    const cfoStyle={
+    const labelStyle={
       border: "2px solid #383838",
       borderTop: "2px solid red",
-      backgroundColor: "white",
-      textAlign: 'left'
+      backgroundColor: "white"
     }
     const formStyle = {
       "backgroundColor": "",
       "flexGrow": 1,
     };
     return (
-      <div style={style}className="ChangeOfficersForm">
+      <div style={style} className="AddRoomForm">
         <fieldset style={fieldset}>
-          <legend style={officerStyle}>Change Officers</legend>
+          <legend style={addStyle}>Add Room</legend>
           <form style={formStyle}>
-            <p style={cfoStyle}>
-              CFO:
-              <input id="cfo" onChange={this.handleTextChange} type="text" value={this.state.cfo} />
-            </p>
-            <p style={cooStyle}>
-              COO:
-              <input id="coo" onChange={this.handleTextChange} type="text" value={this.state.coo} />
-            </p>
+            <label>
+            <div style={labelStyle}> Beds: </div>
+              <input id="numBeds" onChange={this.handleTextChange} type="text" value={this.state.numBeds} />
+            </label>
             <hr />
             <input id="submit" type="submit" value="Submit" onClick={this.handleSubmit}/>
           </form>
@@ -117,4 +107,4 @@ class ChangeOfficersForm extends Component{
   }
 }
 
-export default ChangeOfficersForm
+export default AddRoomForm

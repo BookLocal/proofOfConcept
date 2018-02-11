@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let ownerOf;
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
+let RRAbi = require('../../abis/RoomRentingAbi.js');
 let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 
-class OwnerOf extends Component{
+class TransferFrom extends Component{
   constructor(props){
     super(props)
     this.state = {
-      ownerOfSearchBox : 0,
+      transferFrom: '',
+      transferTo : '',
+      tokenId : '',
       ownerOf : '',
     }
 
@@ -29,24 +30,11 @@ class OwnerOf extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("OwnerOf Search fired!");
-    ownerOf = RR.ownerOf(this.state.roomId);
-    console.log(ownerOf);
-    this.setState({
-      ownerOf: ownerOf,
-    })
+    console.log("TransferFrom fired!");
+    RR.transferFrom(this.state.transferFrom, this.state.transferTo, this.state.tokenId);
   }
 
   render(){
-    const roomStyle={
-      textDecoration: 'overline underline',
-      border: '10px #F4BE41',
-      borderWidth: '10px',
-      backgroundColor: 'white',
-      textAlign: 'center',
-      fontSize: '40px',
-      color: '#3973B5'
-    }
     const style={
       backgroundColor: '#4D4D4D',
       padding: '10px',
@@ -68,22 +56,36 @@ class OwnerOf extends Component{
       paddingLeft: ''
       */
     }
-    const idStyle={
+    const transferStyle={
+      textDecoration: 'overline underline',
+      border: '10px #F4BE41',
+      borderWidth: '10px',
+      backgroundColor: 'white',
+      textAlign: 'center',
+      fontSize: '40px',
+      color: '#3973B5'
+    }
+    const labelStyle={
       border: "2px solid #383838",
       borderTop: "2px solid red",
       backgroundColor: "white"
     }
     const fieldset={
-        border: '2px solid #F4BE41'
+      border: '2px solid #F4BE41'
     }
     return(
-      <div style={style} className="OwnerOf">
+      <div style={style} className="transferFrom">
         <fieldset style={fieldset}>
-          <legend style={roomStyle}>Room Owner</legend>
-            <label style={idStyle}>Room ID:
-              <input id="ownerOfSearchBox" type="text" onChange={this.handleTextChange} value={this.state.roomId} />
+          <legend style={transferStyle}>Transfer From</legend>
+            <label>
+            <div style={labelStyle}> Transfer from address: </div>
+              <input id="transferFrom" type="text" onChange={this.handleTextChange} value={this.state.transferFrom} />
+            <div style={labelStyle}> Transfer to address: </div>
+              <input id="transferTo" type="text" onChange={this.handleTextChange} value={this.state.transferTo} />
+            <div style={labelStyle}> Transfer Token Id: </div>
+              <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
               <hr />
-              <input id="search" type="submit" value="Search" onClick={this.handleSubmit} />
+              <input id="search" type="submit" value="Transfer" onClick={this.handleSubmit} />
               {this.state.ownerOf}
             </label>
         </fieldset>
@@ -92,4 +94,4 @@ class OwnerOf extends Component{
   }
 }
 
-export default OwnerOf
+export default TransferFrom

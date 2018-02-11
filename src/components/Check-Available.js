@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let cancelReservation;
+let available;
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
 
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
-let RRAddress = '0x9fbda871d559710256a2502a2517b794b482db40';
+let RRAbi = require('../../abis/RoomRentingAbi.js');
+let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 
-class CancelReservation extends Component{
+class CheckAvailable extends Component{
   constructor(props){
     super(props)
     this.state = {
       tokenId : '',
-      start: '',
-      stop: '',
-      reserved: '',
+      time: '',
+      availability: '',
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -31,11 +30,12 @@ class CancelReservation extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Cancel Reservation fired!");
-    cancelReservation = RR.cancelReservation(this.state.tokenId, this.state.start, this.state.stop, {from: web3.eth.accounts[0], gas: 3000000});
-    console.log(cancelReservation);
+    console.log("CheckAvailable fired!");
+    available = RR.checkAvailable(this.state.tokenId, this.state.time);
+    available = String(available);
+    console.log(available);
     this.setState({
-      reserved: cancelReservation
+      availability: available,
     });
   }
 
@@ -66,18 +66,16 @@ class CancelReservation extends Component{
       backgroundColor: "white",
     }
     return(
-      <div style={style} className="CancelReservation">
+      <div style={style} className="CheckAvailable">
         <fieldset style={fieldset}>
-          <legend style={legendStyle}>Cancel Your Room</legend>
+          <legend style={legendStyle}>Check availability</legend>
             <label style={labelStyle}>Room Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
-            <div style={labelStyle}> Start: </div>
-              <input id="start" type="text" onChange={this.handleTextChange} value={this.state.start} />
-            <div style={labelStyle}> Stop: </div>
-              <input id="stop" type="text" onChange={this.handleTextChange} value={this.state.stop} />
+            <div style={labelStyle}> Time: </div>
+              <input id="time" type="text" onChange={this.handleTextChange} value={this.state.time} />
               <hr />
-              <input id="search" type="submit" value="Cancel Reservation" onClick={this.handleSubmit} />
-              {this.state.reserved}
+              <input id="search" type="submit" value="Check Availability" onClick={this.handleSubmit} />
+              {this.state.availability}
             </label>
         </fieldset>
       </div>
@@ -85,4 +83,4 @@ class CancelReservation extends Component{
   }
 }
 
-export default CancelReservation
+export default CheckAvailable

@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let reserve;
+let access;
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
 
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
+let RRAbi = require('../../abis/RoomRentingAbi.js');
 let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 
-class Reserve extends Component{
+class Access extends Component{
   constructor(props){
     super(props)
     this.state = {
       tokenId : '',
-      start: '',
-      stop: '',
+      access : '',
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -30,9 +29,13 @@ class Reserve extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("Reserve fired!");
-    reserve = RR.reserve(this.state.tokenId, this.state.start, this.state.stop,{from: web3.eth.accounts[0], gas: 3000000});
-    console.log(reserve);
+    console.log("Access fired!");
+    access = RR.checkAvailable(this.state.tokenId);
+    access = String(access);
+    console.log(access);
+    this.setState({
+      access: access,
+    });
   }
 
   render(){
@@ -62,18 +65,14 @@ class Reserve extends Component{
       backgroundColor: "white",
     }
     return(
-      <div style={style} className="Reserve">
+      <div style={style} className="Access">
         <fieldset style={fieldset}>
-          <legend style={legendStyle}>Reserve Your Room</legend>
+          <legend style={legendStyle}>Access</legend>
             <label style={labelStyle}>Room Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
-            <div style={labelStyle}> Start: </div>
-              <input id="start" type="text" onChange={this.handleTextChange} value={this.state.start} />
-            <div style={labelStyle}> Stop: </div>
-              <input id="stop" type="text" onChange={this.handleTextChange} value={this.state.stop} />
               <hr />
-              <input id="search" type="submit" value="Reserve" onClick={this.handleSubmit} />
-              {this.state.availability}
+              <input id="search" type="submit" value="Gain Access" onClick={this.handleSubmit} />
+              {this.state.access}
             </label>
         </fieldset>
       </div>
@@ -81,4 +80,4 @@ class Reserve extends Component{
   }
 }
 
-export default Reserve
+export default Access

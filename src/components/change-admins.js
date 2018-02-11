@@ -3,27 +3,27 @@ import Web3 from 'web3';
 
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
-// let RBAbi = require('../../../abis/RoomBaseAbi.js');
-// let RBAddress = '0x8273e4b8ed6c78e252a9fca5563adfcc75c91b2a';
-// let RB = web3.eth.contract(RBAbi).at(RBAddress);
-
-// let ROAbi = require('../../../abis/RoomOwnershipAbi.js');
-// let ROAddress = '0x4e71920b7330515faf5ea0c690f1ad06a85fb60c';
-// let RO = web3.eth.contract(ROAbi).at(ROAddress);
-
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
+let RRAbi = require('../../abis/RoomRentingAbi.js');
 let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
-class AddRoomForm extends Component{
+class ChangeOfficersForm extends Component{
   constructor(props){
     super(props);
     this.state = {
-      numBeds : '',
+      cfo : this.props.cfo,
+      coo : this.props.coo,
     }
     this.handleTextChange=this.handleTextChange.bind(this);
     this.handleSubmit=this.handleSubmit.bind(this);
   }
+
+  // componentWillMount(){
+  //   this.setState() = {
+  //     cfo : this.props.cfo,
+  //     coo : this.props.coo,
+  //   }
+  // }
 
   handleTextChange = (event) => {
     if(this.state[event.target.id] !== undefined){
@@ -34,16 +34,15 @@ class AddRoomForm extends Component{
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("handleSubmit fired!");
-    let numBeds = Number(this.state.numBeds);
-    RR.addRoom(numBeds, {from: web3.eth.accounts[0], gas: 3000000});
-    console.log("RR.addRoom fired!");
-    this.setState({
-      numBeds : '',
-    })
+    let cfo = String(this.state.cfo);
+    let coo = String(this.state.coo);
+    RR.setCFO(cfo, {from: web3.eth.accounts[0], gas: 3000000});
+    console.log("RR.setCFO fired!");
+    RR.setCOO(coo, {from: web3.eth.accounts[0], gas: 3000000});
+    console.log("RR.setCOO fired!");
+    this.props.getCfo();
+    this.props.getCoo();
     this.props.getBalance();
-    this.props.getTotalSupply();
-    this.props.getRoomId();
-    this.props.getRoomInfo();
   }
 
   render() {
@@ -68,10 +67,16 @@ class AddRoomForm extends Component{
       paddingLeft: ''
       */
     }
-    const fieldset={
-      border: '2px solid #F4BE41'
+    const cooStyle={
+      border: "2px solid #383838",
+      borderTop: "2px solid red",
+      backgroundColor: "white",
+      textAlign: 'left'
     }
-    const addStyle={
+    const fieldset={
+        border: '2px solid #F4BE41'
+    }
+    const  officerStyle={
       textDecoration: 'overline underline',
       border: '10px #F4BE41',
       borderWidth: '10px',
@@ -80,24 +85,29 @@ class AddRoomForm extends Component{
       fontSize: '40px',
       color: '#3973B5'
     }
-    const labelStyle={
+    const cfoStyle={
       border: "2px solid #383838",
       borderTop: "2px solid red",
-      backgroundColor: "white"
+      backgroundColor: "white",
+      textAlign: 'left'
     }
     const formStyle = {
       "backgroundColor": "",
       "flexGrow": 1,
     };
     return (
-      <div style={style} className="AddRoomForm">
+      <div style={style}className="ChangeOfficersForm">
         <fieldset style={fieldset}>
-          <legend style={addStyle}>Add Room</legend>
+          <legend style={officerStyle}>Change Officers</legend>
           <form style={formStyle}>
-            <label>
-            <div style={labelStyle}> Beds: </div>
-              <input id="numBeds" onChange={this.handleTextChange} type="text" value={this.state.numBeds} />
-            </label>
+            <p style={cfoStyle}>
+              CFO:
+              <input id="cfo" onChange={this.handleTextChange} type="text" value={this.state.cfo} />
+            </p>
+            <p style={cooStyle}>
+              COO:
+              <input id="coo" onChange={this.handleTextChange} type="text" value={this.state.coo} />
+            </p>
             <hr />
             <input id="submit" type="submit" value="Submit" onClick={this.handleSubmit}/>
           </form>
@@ -107,4 +117,4 @@ class AddRoomForm extends Component{
   }
 }
 
-export default AddRoomForm
+export default ChangeOfficersForm

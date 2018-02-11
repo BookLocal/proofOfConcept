@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let available;
+let cancelReservation;
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
 
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
+let RRAbi = require('../../abis/RoomRentingAbi.js');
 let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 
-class ChangeMinRental extends Component{
+class CancelReservation extends Component{
   constructor(props){
     super(props)
     this.state = {
       tokenId : '',
-      minRental: '',
-      availability: '',
+      start: '',
+      stop: '',
+      reserved: '',
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -30,12 +31,11 @@ class ChangeMinRental extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("ChangeMinRental fired!");
-    available = RR.changeMinRental(this.state.tokenId, this.state.minRental, {from: web3.eth.accounts[0], gas: 3000000});
-    available = String(available);
-    console.log(available);
+    console.log("Cancel Reservation fired!");
+    cancelReservation = RR.cancelReservation(this.state.tokenId, this.state.start, this.state.stop, {from: web3.eth.accounts[0], gas: 3000000});
+    console.log(cancelReservation);
     this.setState({
-      availability: available,
+      reserved: cancelReservation
     });
   }
 
@@ -51,13 +51,13 @@ class ChangeMinRental extends Component{
     const fieldset={
       border: '2px solid #F4BE41'
     }
-    const changeStyle={
+    const legendStyle={
       textDecoration: 'overline underline',
       border: '10px #F4BE41',
       borderWidth: '10px',
       backgroundColor: 'white',
       textAlign: 'center',
-      fontSize: '25px',
+      fontSize: '40px',
       color: '#3973B5'
     }
     const labelStyle={
@@ -65,18 +65,19 @@ class ChangeMinRental extends Component{
       borderTop: "2px solid red",
       backgroundColor: "white",
     }
-
     return(
-      <div style={style} className="ChangeMinRental">
+      <div style={style} className="CancelReservation">
         <fieldset style={fieldset}>
-          <legend style={changeStyle}>Change Minimum Rental Period</legend>
+          <legend style={legendStyle}>Cancel Your Room</legend>
             <label style={labelStyle}>Room Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
-            <div style={labelStyle}>  Minimum Rental Period: </div>
-              <input id="minRental" type="text" onChange={this.handleTextChange} value={this.state.minRental} />
+            <div style={labelStyle}> Start: </div>
+              <input id="start" type="text" onChange={this.handleTextChange} value={this.state.start} />
+            <div style={labelStyle}> Stop: </div>
+              <input id="stop" type="text" onChange={this.handleTextChange} value={this.state.stop} />
               <hr />
-              <input id="search" type="submit" value="Change Minimum Rental Time" onClick={this.handleSubmit} />
-              {this.state.availability}
+              <input id="search" type="submit" value="Cancel Reservation" onClick={this.handleSubmit} />
+              {this.state.reserved}
             </label>
         </fieldset>
       </div>
@@ -84,4 +85,4 @@ class ChangeMinRental extends Component{
   }
 }
 
-export default ChangeMinRental
+export default CancelReservation

@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let available;
+let getCurrentTime;
 let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
 
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
+let RRAbi = require('../../abis/RoomRentingAbi.js');
 let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 
-class CheckAvailable extends Component{
+class GetCurrentTime extends Component{
   constructor(props){
     super(props)
     this.state = {
       tokenId : '',
-      time: '',
-      availability: '',
+      getCurrentTime : '',
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -30,12 +29,13 @@ class CheckAvailable extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("CheckAvailable fired!");
-    available = RR.checkAvailable(this.state.tokenId, this.state.time);
-    available = String(available);
-    console.log(available);
+    console.log("GetCurrentTime fired!");
+    getCurrentTime = RR.getCurrentTime(this.state.tokenId);
+    console.log(getCurrentTime);
+    getCurrentTime = String(getCurrentTime);
+    console.log(getCurrentTime);
     this.setState({
-      availability: available,
+      getCurrentTime: getCurrentTime,
     });
   }
 
@@ -48,10 +48,7 @@ class CheckAvailable extends Component{
       marginTop: '5px',
       marginBottom: '5px',
     }
-    const fieldset={
-      border: '2px solid #F4BE41'
-    }
-    const legendStyle={
+    const getStyle={
       textDecoration: 'overline underline',
       border: '10px #F4BE41',
       borderWidth: '10px',
@@ -60,22 +57,23 @@ class CheckAvailable extends Component{
       fontSize: '40px',
       color: '#3973B5'
     }
-    const labelStyle={
-      border: "2px solid #383838",
-      borderTop: "2px solid red",
-      backgroundColor: "white",
+    const fieldset={
+      border: '2px solid #F4BE41'
     }
+    const roomStyle={
+    border: "2px solid #383838",
+    borderTop: "2px solid red",
+    backgroundColor: "white",
+  }
     return(
-      <div style={style} className="CheckAvailable">
+      <div style={style} className="GetCurrentTime">
         <fieldset style={fieldset}>
-          <legend style={legendStyle}>Check availability</legend>
-            <label style={labelStyle}>Room Id:
+          <legend style={getStyle}>GetCurrentTime</legend>
+            <label style={roomStyle}>Room Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
-            <div style={labelStyle}> Time: </div>
-              <input id="time" type="text" onChange={this.handleTextChange} value={this.state.time} />
               <hr />
-              <input id="search" type="submit" value="Check Availability" onClick={this.handleSubmit} />
-              {this.state.availability}
+              <input id="search" type="submit" value="Get Current Time" onClick={this.handleSubmit} />
+              {this.state.getCurrentTime}
             </label>
         </fieldset>
       </div>
@@ -83,4 +81,4 @@ class CheckAvailable extends Component{
   }
 }
 
-export default CheckAvailable
+export default GetCurrentTime

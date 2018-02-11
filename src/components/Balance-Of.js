@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let available;
-let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+let balanceOf;
+let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
+let RRAbi = require('../../abis/RoomRentingAbi.js');
 let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 
-class ChangeNumBeds extends Component{
+class BalanceOf extends Component{
   constructor(props){
     super(props)
     this.state = {
-      tokenId : '',
-      numBeds: '',
-      availability: '',
+      balanceOfSearchBox : '',
+      balanceOf :'',
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -30,13 +29,12 @@ class ChangeNumBeds extends Component{
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("ChangeNumBeds fired!");
-    available = RR.changeNumBeds(this.state.tokenId, this.state.numBeds, {from: web3.eth.accounts[0], gas: 3000000});
-    available = String(available);
-    console.log(available);
+    console.log("BalanceOf Search fired!");
+    balanceOf = Number(RR.balanceOf(this.state.balanceOf));
+    console.log(balanceOf);
     this.setState({
-      availability: available,
-    });
+      balanceOf: balanceOf,
+    })
   }
 
   render(){
@@ -57,7 +55,7 @@ class ChangeNumBeds extends Component{
       borderWidth: '10px',
       backgroundColor: 'white',
       textAlign: 'center',
-      fontSize: '30px',
+      fontSize: '40px',
       color: '#3973B5'
     }
     const labelStyle={
@@ -66,16 +64,14 @@ class ChangeNumBeds extends Component{
       backgroundColor: "white",
     }
     return(
-      <div style={style} className="ChangeNumBeds">
+      <div style={style} className="balanceOf">
         <fieldset style={fieldset}>
-        <legend style={legendStyle}>Change Number of Beds</legend>
-            <label style={labelStyle}>Room Id:
-              <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
-            <div style={labelStyle}> Number of Beds: </div>
-              <input id="numBeds" type="text" onChange={this.handleTextChange} value={this.state.numBeds} />
+          <legend style={legendStyle}>Balance Of</legend>
+            <label style={labelStyle}>Address:
+              <input id="balanceOfSearchBox" type="text" onChange={this.handleTextChange} value={this.state.balanceOfSearchBox} />
               <hr />
-              <input id="search" type="submit" value="Change Number of Beds" onClick={this.handleSubmit} />
-              {this.state.availability}
+              <input id="search" type="submit" value="Search" onClick={this.handleSubmit} />
+              {this.state.balanceOf}
             </label>
         </fieldset>
       </div>
@@ -83,4 +79,4 @@ class ChangeNumBeds extends Component{
   }
 }
 
-export default ChangeNumBeds
+export default BalanceOf

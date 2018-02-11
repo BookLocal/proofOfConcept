@@ -1,24 +1,16 @@
 import React, { Component } from 'react';
-import Admins from '../../components/admins.js'
-import RoomInfo from '../../components/room-details.js'
+import RoomInfo from '../../components/room-details.js';
 import TotalSupply from '../../components/total-supply.js';
 import '../../App.css';
 import Web3 from 'web3';
-import AddRoomForm from '../../components/Add-Room.js';
-import ChangeOfficersForm from '../../components/change-admins.js';
 import OwnerOf from '../../components/ownerOf.js';
-import Transfer from '../../components/Transfer.js';
-import TransferFrom from '../../components/Transfer-From.js';
 import Approve from '../../components/Approve.js';
-import BalanceOf from '../../components/Balance-Of.js';
 import CheckAvailable from '../../components/Check-Available.js';
 import Reserve from '../../components/Reserve.js';
 import Access from '../../components/Access.js';
 import Settle from '../../components/Settle.js';
 import CancelReservation from '../../components/Cancel-Reservation.js';
 import GetCurrentTime from '../../components/Get-Current-Time.js';
-import ChangeMinRental from '../../components/Change-Min-Rental.js';
-import ChangeNumBeds from '../../components/Change-Num-Beds.js';
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
 
@@ -53,7 +45,7 @@ let numBeds = String(roomInfo[3]).split(',');
 
 web3.eth.defaultAccount = web3.eth.accounts[0];
 
-class Home extends Component {
+class EthMemphis extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -152,89 +144,13 @@ class Home extends Component {
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
-            <h1>BookLocal Homepage</h1>
-            <p>The page is being modified to read and write to the Truffle testRpc.</p>
-
-            // TODO: call data from blockchain here.
+            <h1>ETHMemphis Reservation Page</h1>
 
             <div style={gridWrapper} className="Container">
-              <Admins
-                getBalance={this.getBalance}
-                balance={balance}
-                getCeo={this.getCeo}
-                ceo={ceo}
-                getCfo={this.getCfo}
-                cfo={cfo}
-                getCoo={this.getCoo}
-                coo={coo}
-              />
-              <ChangeOfficersForm
-                getCfo={this.getCfo}
-                cfo={cfo}
-                getCoo={this.getCoo}
-                coo={coo}
-                getBalance={this.getBalance}
-              />
-              <TotalSupply
-                getTotalSupply={this.getTotalSupply}
-                totalSupply={totalSupply}
-              />
-              <RoomInfo
-                getRoomId={this.getRoomId}
-                roomId={roomId}
-                getRoomInfo={this.getRoomInfo}
-                hotelId={hotelId}
-                roomNumber={roomNumber}
-                minRentTime={minRentTime}
-                numBeds={numBeds}
-              />
-              <OwnerOf />
-              <Transfer />
-              <TransferFrom />
-              <Approve />
-              <ChangeMinRental />
-              <AddRoomForm
-                getBalance={this.getBalance}
-                getTotalSupply={this.getTotalSupply}
-                getRoomId={this.getRoomId}
-                getRoomInfo={this.getRoomInfo}
-                addHotelId={this.state.addHotelId}
-                addRoomNumber={this.state.addRoomNumber}
-                addNumBeds={this.state.addNumBeds}
-                addRoom={this.addRoom}
-                transactionObject={this.transactionObject}
-              />
-              <ChangeNumBeds />
-              <Access />
-              <Settle />
-              <BalanceOf />
-              <GetCurrentTime />
-              <CheckAvailable />
               <Reserve />
-              <CancelReservation />
             </div>
             <img id="loader" src='https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif' role="presentation"/>
-            // end data call.
 
-            <h2>UPort Authentication</h2>
-            <p>This particular box comes with UPort autentication built-in.</p>
-            <p>NOTE: To interact with your smart contracts through UPort's web3 instance, make sure they're deployed to the Ropsten testnet.</p>
-            <p>In the upper-right corner, you'll see a login button. Click it to login with UPort. There is an authenticated route, "/dashboard", that displays the UPort user's name once authenticated.</p>
-            <h3>Redirect Path</h3>
-            <p>This example redirects home ("/") when trying to access an authenticated route without first authenticating. You can change this path in the failureRedriectUrl property of the UserIsAuthenticated wrapper on <strong>line 9</strong> of util/wrappers.js.</p>
-            <h3>Accessing User Data</h3>
-            <p>Once authenticated, any component can access the user's data by assigning the authData object to a component's props.</p>
-            <pre><code>
-              {"// In component's constructor."}<br/>
-              {"constructor(props, { authData }) {"}<br/>
-              {"  super(props)"}<br/>
-              {"  authData = this.props"}<br/>
-              {"}"}<br/><br/>
-              {"// Use in component."}<br/>
-              {"Hello { this.props.authData.name }!"}
-            </code></pre>
-            <h3>Further Reading</h3>
-            <p>The React/Redux portions of the authentication fuctionality are provided by <a href="https://github.com/mjrussell/redux-auth-wrapper" target="_blank">mjrussell/redux-auth-wrapper</a>.</p>
           </div>
         </div>
       </main>
@@ -242,4 +158,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default EthMemphis
