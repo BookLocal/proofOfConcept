@@ -12,6 +12,7 @@ import Access from '../../components/Access.js';
 import Settle from '../../components/Settle.js';
 import CancelReservation from '../../components/Cancel-Reservation.js';
 import GetCurrentTime from '../../components/Get-Current-Time.js';
+import GetRoomInfo from '../../components/Get-Room-Info.js';
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
 
@@ -153,7 +154,7 @@ class GuestView extends Component {
 
               <Access />
               <Settle />
-
+              <GetRoomInfo/>
               <GetCurrentTime />
               <CheckAvailable />
               <Reserve />

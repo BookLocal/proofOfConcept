@@ -20,6 +20,7 @@ import CancelReservation from '../../components/Cancel-Reservation.js';
 import GetCurrentTime from '../../components/Get-Current-Time.js';
 import ChangeMinRental from '../../components/Change-Min-Rental.js';
 import ChangeNumBeds from '../../components/Change-Num-Beds.js';
+import GetRoomInfo from '../../components/Get-Room-Info.js';
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
 
@@ -157,6 +158,7 @@ class HotelFrontDesk extends Component {
               <Access />
               <Settle />
               <GetCurrentTime />
+              <GetRoomInfo/>
               <CheckAvailable />
               <Reserve />
               <CancelReservation />
