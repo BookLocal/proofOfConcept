@@ -45,6 +45,7 @@ class App extends Component {
           <Link to="/" className="pure-menu-heading pure-menu-link">BookLocal</Link>
           <Link to="/guest" className="pure-menu-heading pure-menu-link">GuestView</Link>
           <Link to="/ethmemphis" className="pure-menu-heading pure-menu-link">ETHMemphis</Link>
+          <Link to="/hotelfrontdesk" className="pure-menu-heading pure-menu-link">HotelFrontDesk</Link>
           <ul className="pure-menu-list navbar-right">
             <OnlyGuestLinks />
             <OnlyAuthLinks />
