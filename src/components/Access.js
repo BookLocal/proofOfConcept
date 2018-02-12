@@ -30,8 +30,7 @@ class Access extends Component{
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("Access fired!");
-    access = RR.checkAvailable(this.state.tokenId);
-    access = String(access);
+    access = RR.access(web3.toBigNumber(this.state.tokenId));
     console.log(access);
     this.setState({
       access: access,
