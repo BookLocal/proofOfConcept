@@ -32,12 +32,12 @@ class Reserve extends Component{
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("Reserve fired!");
-    console.log("("+Number(this.state.tokenId)+","+Number(this.state.start)+","+Number(this.state.stop)+","+String(this.state.accessCode)+",{from: "+web3.eth.accounts[0]+", gas: 3000000}");
+    console.log("("+web3.toBigNumber(this.state.tokenId)+","+web3.toBigNumber(this.state.start)+","+web3.toBigNumber(this.state.stop)+","+web3.fromAscii(this.state.accessCode,32)+",{from: "+web3.eth.accounts[0]+", gas: 3000000}");
     reserve = RR.reserve(
-      Number(this.state.tokenId),
-      Number(this.state.start),
-      Number(this.state.stop),
-      String(this.state.accessCode),
+      web3.toBigNumber(this.state.tokenId),
+      web3.toBigNumber(this.state.start),
+      web3.toBigNumber(this.state.stop),
+      web3.toAscii(this.state.accessCode,32),
       {from: web3.eth.accounts[0], gas: 3000000}
     );
     console.log(reserve);

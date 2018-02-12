@@ -28,8 +28,7 @@ class AddAccessCode extends Component{
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("addAccessCode fired!");
-    addAccessCode = RR.addAccessCode(this.state.addAccessCode);
-    addAccessCode = String(addAccessCode);
+    addAccessCode = RR.addAccessCode(web3.toAscii(this.state.addAccessCode,32));
     console.log(addAccessCode);
     this.setState({
       addAccessCode: addAccessCode,
