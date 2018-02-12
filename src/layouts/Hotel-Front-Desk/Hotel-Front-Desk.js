@@ -3,6 +3,7 @@ import Admins from '../../components/admins.js'
 import RoomInfo from '../../components/room-details.js'
 import TotalSupply from '../../components/total-supply.js';
 import '../../App.css';
+import './Hotel-Front-Desk.css';
 import Web3 from 'web3';
 import AddRoomForm from '../../components/Add-Room.js';
 import ChangeOfficersForm from '../../components/change-admins.js';
@@ -127,27 +128,6 @@ class HotelFrontDesk extends Component {
   )
 
   render() {
-    const gridWrapper={
-      display: 'grid',
-      gridTemplateColumns: 'repeat(3, 2fr)',
-      gridAutoRow: '60px 60px 60px',
-      gridAutoColumn: '90px 90px 90px',
-      gridAutoFlow: 'row',
-      alignItems: 'start',
-      justifyItems: '',
-      gridTemplateAreas: '',
-      alignContent: 'center',
-      /*
-      gridColumnStart: '',
-      gridColumnEnd: '',
-      gridRowStart: '',
-      gridRowEnd: '',
-      gridTemplateRows: '',
-      gridColumnGap: '1em',
-      gridRowGap: '',
-      */
-}
-
     return(
       <main className="container">
         <div className="pure-g">
@@ -157,7 +137,7 @@ class HotelFrontDesk extends Component {
 
             // TODO: call data from blockchain here.
 
-            <div style={gridWrapper} className="Container">
+            <div className="Container">
               <TotalSupply
                 getTotalSupply={this.getTotalSupply}
                 totalSupply={totalSupply}
