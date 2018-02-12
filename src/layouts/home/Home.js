@@ -21,6 +21,7 @@ import GetCurrentTime from '../../components/Get-Current-Time.js';
 import ChangeMinRental from '../../components/Change-Min-Rental.js';
 import ChangeNumBeds from '../../components/Change-Num-Beds.js';
 import AddAccessCode from '../../components/Add-Access-Code.js';
+import GetRoomInfo from '../../components/Get-Room-Info.js';
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
 
@@ -139,6 +140,7 @@ class Home extends Component {
             // TODO: call data from blockchain here.
 
             <div className="Container">
+              <GetRoomInfo/>
               <Admins
                 getBalance={this.getBalance}
                 balance={balance}
