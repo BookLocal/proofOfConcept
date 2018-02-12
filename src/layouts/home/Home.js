@@ -3,6 +3,7 @@ import Admins from '../../components/admins.js'
 import RoomInfo from '../../components/room-details.js'
 import TotalSupply from '../../components/total-supply.js';
 import '../../App.css';
+import './Home.css';
 import Web3 from 'web3';
 import AddRoomForm from '../../components/Add-Room.js';
 import ChangeOfficersForm from '../../components/change-admins.js';
@@ -128,27 +129,6 @@ class Home extends Component {
   )
 
   render() {
-    const gridWrapper={
-      display: 'grid',
-      gridTemplateColumns: 'repeat(3, 2fr)',
-      gridAutoRow: '60px 60px 60px',
-      gridAutoColumn: '90px 90px 90px',
-      gridAutoFlow: 'row',
-      alignItems: 'start',
-      justifyItems: '',
-      gridTemplateAreas: '',
-      alignContent: 'center',
-      /*
-      gridColumnStart: '',
-      gridColumnEnd: '',
-      gridRowStart: '',
-      gridRowEnd: '',
-      gridTemplateRows: '',
-      gridColumnGap: '1em',
-      gridRowGap: '',
-      */
-}
-
     return(
       <main className="container">
         <div className="pure-g">
@@ -158,7 +138,7 @@ class Home extends Component {
 
             // TODO: call data from blockchain here.
 
-            <div style={gridWrapper} className="Container">
+            <div className="Container">
               <Admins
                 getBalance={this.getBalance}
                 balance={balance}
