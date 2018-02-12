@@ -32,7 +32,6 @@ class CheckAvailable extends Component{
     event.preventDefault();
     console.log("CheckAvailable fired!");
     available = RR.checkAvailable(this.state.tokenId, this.state.time);
-    available = String(available);
     console.log(available);
     this.setState({
       availability: available,

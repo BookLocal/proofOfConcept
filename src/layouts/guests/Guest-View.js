@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RoomInfo from '../../components/room-details.js';
 import TotalSupply from '../../components/total-supply.js';
 import '../../App.css';
+import './Guest-View.css';
 import Web3 from 'web3';
 import OwnerOf from '../../components/ownerOf.js';
 import Approve from '../../components/Approve.js';
@@ -11,6 +12,7 @@ import Access from '../../components/Access.js';
 import Settle from '../../components/Settle.js';
 import CancelReservation from '../../components/Cancel-Reservation.js';
 import GetCurrentTime from '../../components/Get-Current-Time.js';
+import GetRoomInfo from '../../components/Get-Room-Info.js';
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
 
@@ -119,27 +121,6 @@ class GuestView extends Component {
   )
 
   render() {
-    const gridWrapper={
-      display: 'grid',
-      gridTemplateColumns: 'repeat(3, 2fr)',
-      gridAutoRow: '60px 60px 60px',
-      gridAutoColumn: '90px 90px 90px',
-      gridAutoFlow: 'row',
-      alignItems: 'start',
-      justifyItems: '',
-      gridTemplateAreas: '',
-      alignContent: 'center',
-      /*
-      gridColumnStart: '',
-      gridColumnEnd: '',
-      gridRowStart: '',
-      gridRowEnd: '',
-      gridTemplateRows: '',
-      gridColumnGap: '1em',
-      gridRowGap: '',
-      */
-}
-
     return(
       <main className="container">
         <div className="pure-g">
@@ -149,7 +130,7 @@ class GuestView extends Component {
 
             // TODO: call data from blockchain here.
 
-            <div style={gridWrapper} className="Container">
+            <div className="Container">
 
               <TotalSupply
                 getTotalSupply={this.getTotalSupply}
@@ -173,7 +154,7 @@ class GuestView extends Component {
 
               <Access />
               <Settle />
-
+              <GetRoomInfo/>
               <GetCurrentTime />
               <CheckAvailable />
               <Reserve />
