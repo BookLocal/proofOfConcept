@@ -19,6 +19,7 @@ import CancelReservation from '../../components/Cancel-Reservation.js';
 import GetCurrentTime from '../../components/Get-Current-Time.js';
 import ChangeMinRental from '../../components/Change-Min-Rental.js';
 import ChangeNumBeds from '../../components/Change-Num-Beds.js';
+import AddAccessCode from '../../components/Add-Access-Code.js';
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
 
@@ -168,6 +169,7 @@ class Home extends Component {
                 getCoo={this.getCoo}
                 coo={coo}
               />
+              <AddAccessCode/>
               <ChangeOfficersForm
                 getCfo={this.getCfo}
                 cfo={cfo}
