@@ -16,7 +16,8 @@ class Reserve extends Component{
       tokenId : '',
       start: '',
       stop: '',
-      accessCode: ''
+      accessCode: '',
+      availability: ''
     }
 
     this.handleSubmit=this.handleSubmit.bind(this);
@@ -38,7 +39,24 @@ class Reserve extends Component{
       web3.toBigNumber(this.state.start),
       web3.toBigNumber(this.state.stop),
       web3.fromAscii(this.state.accessCode,32),
-      {from: web3.eth.accounts[0], gas: 3000000}
+      {from: web3.eth.accounts[0], gas: 3000000},
+      (err,res) => {
+        if(err){
+          console.log(
+            'availability: "false"'
+          );
+          this.setState({
+            availability: "Oops! Something went wrong :-("
+          })
+        }
+        console.log(
+          'availability: "true"'
+        );
+        console.log(res);
+        this.setState({
+          availability: "Success!"
+        });
+      }
     );
     console.log(reserve);
   }
