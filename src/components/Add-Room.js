@@ -11,8 +11,8 @@ let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 // let ROAddress = '0x4e71920b7330515faf5ea0c690f1ad06a85fb60c';
 // let RO = web3.eth.contract(ROAbi).at(ROAddress);
 
-let RRAbi = require('../../../abis/RoomRentingAbi.js');
-let RRAddress = '0x9fbda871d559710256a2502a2517b794b482db40';
+let RRAbi = require('../../abis/RoomRentingAbi.js');
+let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 class AddRoomForm extends Component{
@@ -47,17 +47,55 @@ class AddRoomForm extends Component{
   }
 
   render() {
+    const style={
+      backgroundColor: '#4D4D4D',
+      padding: '10px',
+      fontWeight: 'bold',
+      width: '420px',
+      marginTop: '5px',
+      marginBottom: '5px',
+      /*
+      color: '',
+      textAlign: '',
+      border: '',
+      margin: '',
+      display: '',
+      clear: '',
+      float: '',
+      paddingTop: '',
+      paddingRight: '',
+      paddingBottom: '',
+      paddingLeft: ''
+      */
+    }
+    const fieldset={
+      border: '2px solid #F4BE41'
+    }
+    const addStyle={
+      textDecoration: 'overline underline',
+      border: '10px #F4BE41',
+      borderWidth: '10px',
+      backgroundColor: 'white',
+      textAlign: 'center',
+      fontSize: '40px',
+      color: '#3973B5'
+    }
+    const labelStyle={
+      border: "2px solid #383838",
+      borderTop: "2px solid red",
+      backgroundColor: "white"
+    }
     const formStyle = {
-      "backgroundColor": "deepskyblue",
+      "backgroundColor": "",
       "flexGrow": 1,
     };
     return (
-      <div className="AddRoomForm">
-        <fieldset>
-          <legend>Add Room</legend>
+      <div style={style} className="AddRoomForm">
+        <fieldset style={fieldset}>
+          <legend style={addStyle}>Add Room</legend>
           <form style={formStyle}>
             <label>
-              Beds:
+            <div style={labelStyle}> Beds: </div>
               <input id="numBeds" onChange={this.handleTextChange} type="text" value={this.state.numBeds} />
             </label>
             <hr />

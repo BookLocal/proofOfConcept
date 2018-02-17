@@ -50,6 +50,51 @@ const RRAbi = [
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "_tokenId",
+        "type": "uint256"
+      },
+      {
+        "name": "_start",
+        "type": "uint256"
+      },
+      {
+        "name": "_stop",
+        "type": "uint256"
+      },
+      {
+        "name": "_accessCode",
+        "type": "bytes32"
+      }
+    ],
+    "name": "reserve",
+    "outputs": [
+      {
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getNumberOfAccessCodes",
+    "outputs": [
+      {
+        "name": "_codesLeft",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": true,
     "inputs": [],
     "name": "totalSupply",
@@ -449,25 +494,12 @@ const RRAbi = [
     "constant": false,
     "inputs": [
       {
-        "name": "_tokenId",
-        "type": "uint256"
-      },
-      {
-        "name": "_start",
-        "type": "uint256"
-      },
-      {
-        "name": "_stop",
-        "type": "uint256"
+        "name": "_accessCode",
+        "type": "bytes32"
       }
     ],
-    "name": "reserve",
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool"
-      }
-    ],
+    "name": "addAccessCode",
+    "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
     "type": "function"
@@ -527,6 +559,25 @@ const RRAbi = [
     "constant": true,
     "inputs": [
       {
+        "name": "_tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getNumBeds",
+    "outputs": [
+      {
+        "name": "numBeds",
+        "type": "uint16"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
         "name": "",
         "type": "address"
       }
@@ -559,6 +610,28 @@ const RRAbi = [
       {
         "name": "",
         "type": "bool"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "getCLevel",
+    "outputs": [
+      {
+        "name": "_ceo",
+        "type": "address"
+      },
+      {
+        "name": "_cfo",
+        "type": "address"
+      },
+      {
+        "name": "_coo",
+        "type": "address"
       }
     ],
     "payable": false,

@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router'
-import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
+import React, { Component } from 'react';
+import { Link } from 'react-router';
+import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js';
+import { AragonApp } from '@aragon/ui'
 
 // UI Components
 import LoginButtonContainer from './user/ui/loginbutton/LoginButtonContainer'
@@ -14,6 +15,12 @@ import './App.css'
 
 class App extends Component {
   render() {
+  //  const AragonApp = () => {
+  //     <AragonApp>
+  //       {/* Your app goes here */}
+  //     </AragonApp>
+  //   } 
+
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <span>
         <li className="pure-menu-item">
@@ -36,13 +43,21 @@ class App extends Component {
       <div className="App">
         <nav className="navbar pure-menu pure-menu-horizontal">
           <Link to="/" className="pure-menu-heading pure-menu-link">BookLocal</Link>
+          <Link to="/guest" className="pure-menu-heading pure-menu-link">GuestView</Link>
+          <Link to="/ethmemphis" className="pure-menu-heading pure-menu-link">ETHMemphis</Link>
+          <Link to="/hotelfrontdesk" className="pure-menu-heading pure-menu-link">HotelFrontDesk</Link>
           <ul className="pure-menu-list navbar-right">
             <OnlyGuestLinks />
             <OnlyAuthLinks />
           </ul>
         </nav>
-
+        <AragonApp>
         {this.props.children}
+        
+          {/* BUG: right now AragonApp is not seen as a valid react component */}
+          {/* <AragonApp /> */}
+       
+        </AragonApp>
       </div>
     );
   }

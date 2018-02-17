@@ -1,26 +1,17 @@
 import React, { Component } from 'react';
-import Admins from '../../components/admins.js'
-import RoomInfo from '../../components/room-details.js'
+import RoomInfo from '../../components/room-details.js';
 import TotalSupply from '../../components/total-supply.js';
 import '../../App.css';
-import './Home.css';
+import './Guest-View.css';
 import Web3 from 'web3';
-import AddRoomForm from '../../components/Add-Room.js';
-import ChangeOfficersForm from '../../components/change-admins.js';
 import OwnerOf from '../../components/ownerOf.js';
-import Transfer from '../../components/Transfer.js';
-import TransferFrom from '../../components/Transfer-From.js';
 import Approve from '../../components/Approve.js';
-import BalanceOf from '../../components/Balance-Of.js';
 import CheckAvailable from '../../components/Check-Available.js';
 import Reserve from '../../components/Reserve.js';
 import Access from '../../components/Access.js';
 import Settle from '../../components/Settle.js';
 import CancelReservation from '../../components/Cancel-Reservation.js';
 import GetCurrentTime from '../../components/Get-Current-Time.js';
-import ChangeMinRental from '../../components/Change-Min-Rental.js';
-import ChangeNumBeds from '../../components/Change-Num-Beds.js';
-import AddAccessCode from '../../components/Add-Access-Code.js';
 import GetRoomInfo from '../../components/Get-Room-Info.js';
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
@@ -56,7 +47,7 @@ let numBeds = String(roomInfo[3]).split(',');
 
 web3.eth.defaultAccount = web3.eth.accounts[0];
 
-class Home extends Component {
+class GuestView extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -140,25 +131,7 @@ class Home extends Component {
             // TODO: call data from blockchain here.
 
             <div className="Container">
-              <GetRoomInfo/>
-              <Admins
-                getBalance={this.getBalance}
-                balance={balance}
-                getCeo={this.getCeo}
-                ceo={ceo}
-                getCfo={this.getCfo}
-                cfo={cfo}
-                getCoo={this.getCoo}
-                coo={coo}
-              />
-              <AddAccessCode/>
-              <ChangeOfficersForm
-                getCfo={this.getCfo}
-                cfo={cfo}
-                getCoo={this.getCoo}
-                coo={coo}
-                getBalance={this.getBalance}
-              />
+
               <TotalSupply
                 getTotalSupply={this.getTotalSupply}
                 totalSupply={totalSupply}
@@ -173,25 +146,15 @@ class Home extends Component {
                 numBeds={numBeds}
               />
               <OwnerOf />
-              <Transfer />
-              <TransferFrom />
+
+
               <Approve />
-              <ChangeMinRental />
-              <AddRoomForm
-                getBalance={this.getBalance}
-                getTotalSupply={this.getTotalSupply}
-                getRoomId={this.getRoomId}
-                getRoomInfo={this.getRoomInfo}
-                addHotelId={this.state.addHotelId}
-                addRoomNumber={this.state.addRoomNumber}
-                addNumBeds={this.state.addNumBeds}
-                addRoom={this.addRoom}
-                transactionObject={this.transactionObject}
-              />
-              <ChangeNumBeds />
+
+
+
               <Access />
               <Settle />
-              <BalanceOf />
+              <GetRoomInfo/>
               <GetCurrentTime />
               <CheckAvailable />
               <Reserve />
@@ -226,4 +189,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default GuestView
