@@ -15,11 +15,11 @@ import './App.css'
 
 class App extends Component {
   render() {
-    const AragonApp = () => {
-      <AragonApp>
-        {/* Your app goes here */}
-      </AragonApp>
-    }
+  //  const AragonApp = () => {
+  //     <AragonApp>
+  //       {/* Your app goes here */}
+  //     </AragonApp>
+  //   } 
 
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <span>
@@ -51,11 +51,13 @@ class App extends Component {
             <OnlyAuthLinks />
           </ul>
         </nav>
+        <AragonApp>
         {this.props.children}
-        {/*
-          BUG: right now AragonApp is not seen as a valid react component
-          <AragonApp />
-        */}
+        
+          {/* BUG: right now AragonApp is not seen as a valid react component */}
+          {/* <AragonApp /> */}
+       
+        </AragonApp>
       </div>
     );
   }
