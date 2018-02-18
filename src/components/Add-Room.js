@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
 
-let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
+let web3 = window.web3
+// stolen code zone vvv
+
+if (typeof web3 !== 'undefined') {
+  // Use Mist/MetaMask's provider
+  web3 = new Web3(window.web3.currentProvider);
+  console.log("first case");
+} else {
+  console.log('No web3? You should consider trying MetaMask!')
+    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+}
 
 // let RBAbi = require('../../../abis/RoomBaseAbi.js');
 // let RBAddress = '0x8273e4b8ed6c78e252a9fca5563adfcc75c91b2a';
@@ -12,7 +23,7 @@ let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
 // let RO = web3.eth.contract(ROAbi).at(ROAddress);
 
 let RRAbi = require('../../abis/RoomRentingAbi.js');
-let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
+let RRAddress = require('../../Contract-Addresses/Rinkeby-Address.js');
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 class AddRoomForm extends Component{
@@ -35,7 +46,13 @@ class AddRoomForm extends Component{
     event.preventDefault();
     console.log("handleSubmit fired!");
     let numBeds = Number(this.state.numBeds);
-    RR.addRoom(numBeds, {from: web3.eth.accounts[0], gas: 3000000});
+    RR.addRoom(numBeds, {from: web3.eth.accounts[0], gas: 3000000}, (err,res)=>{
+      if(err){
+        console.log("there is an error with the callback");
+      }
+      console.log("success!");
+      console.log(res);
+    });
     console.log("RR.addRoom fired!");
     this.setState({
       numBeds : '',

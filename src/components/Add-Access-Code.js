@@ -2,10 +2,21 @@ import React, { Component } from 'react';
 import Web3 from 'web3';
 
 let addAccessCode;
-let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+let web3 = window.web3
+// stolen code zone vvv
+
+if (typeof web3 !== 'undefined') {
+  // Use Mist/MetaMask's provider
+  web3 = new Web3(window.web3.currentProvider);
+  console.log("first case");
+} else {
+  console.log('No web3? You should consider trying MetaMask!')
+    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+}
 
 let RRAbi = require('../../abis/RoomRentingAbi.js');
-let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
+let RRAddress = require('../../Contract-Addresses/Rinkeby-Address.js');
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
 class AddAccessCode extends Component{
@@ -28,7 +39,21 @@ class AddAccessCode extends Component{
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("addAccessCode fired!");
-    addAccessCode = RR.addAccessCode(web3.fromAscii(this.state.addAccessCode,32));
+    RR.addAccessCode(
+      web3.fromAscii(
+        this.state.addAccessCode,32),
+        {from: web3.eth.accounts[0], gas: 3000000},
+      (err,res)=>{
+        if(err){
+          console.log("there is an error with the callback");
+        } else {
+        console.log("success!");
+        }
+        console.log(res);
+        addAccessCode = res;
+        console.log(addAccessCode);
+      }
+    );
     console.log(addAccessCode);
     this.setState({
       addAccessCode: addAccessCode,
@@ -66,7 +91,7 @@ render(){
       <fieldset style={fieldset}>
         <legend style={legendStyle}>AccessCode</legend>
           <label style={labelStyle}>AccessCode:
-            <input id="addAccessCode" type="text" onChange={this.handleTextChange} value={this.state.addAccessCode} />
+            <textarea id="addAccessCode" value={this.state.addAccessCode} onChange={this.handleTextChange} />
             <hr />
             <input id="submit" type="submit" value="AddAccess" onClick={this.handleSubmit} />
             {this.state.addAccessCode}

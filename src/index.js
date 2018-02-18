@@ -14,6 +14,7 @@ import Profile from './user/layouts/profile/Profile'
 import GuestView from './layouts/guests/Guest-View.js'
 import EthMemphis from './layouts/EthMemphis-Reservations/EthMemphis-Reservations.js'
 import HotelFrontDesk from './layouts/Hotel-Front-Desk/Hotel-Front-Desk.js'
+import RinkebyControls from './layouts/Rinkeby-Controls/Rinkeby-Controls.js'
 
 // Redux Store
 import store from './store'
@@ -31,6 +32,7 @@ ReactDOM.render((
             <Route path="guest" component={GuestView}/>
             <Route path="ethmemphis" component={EthMemphis}/>
             <Route path="hotelfrontdesk" component={HotelFrontDesk}/>
+            <Route path="rinkebycontrols" component={RinkebyControls}/>
           </Route>
         </AragonApp>
       </Router>

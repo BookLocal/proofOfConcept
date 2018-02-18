@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import RoomInfo from '../../components/room-details.js';
-import TotalSupply from '../../components/total-supply.js';
 import '../../App.css';
-import './EthMemphis-Reservations.css';
+import './Rinkeby-Controls.css';
 import Web3 from 'web3';
-import OwnerOf from '../../components/ownerOf.js';
-import Approve from '../../components/Approve.js';
 import CheckAvailable from '../../components/Check-Available.js';
 import Reserve from '../../components/Reserve.js';
-import Access from '../../components/Access.js';
-import Settle from '../../components/Settle.js';
-import CancelReservation from '../../components/Cancel-Reservation.js';
 import GetCurrentTime from '../../components/Get-Current-Time.js';
+import AddRoom from '../../components/Add-Room.js';
+import AddAccessCode from '../../components/Add-Access-Code.js'
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
 
@@ -46,7 +42,7 @@ let numBeds = String(roomInfo[3]).split(',');
 
 web3.eth.defaultAccount = web3.eth.accounts[0];
 
-class EthMemphis extends Component {
+class RinkebyControls extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -124,14 +120,16 @@ class EthMemphis extends Component {
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
-            <div className="spinner">
             <h1>ETHMemphis Reservation Page</h1>
 
             <div className="Container">
               <Reserve />
+              <AddAccessCode />
+              <AddRoom />
+              <GetCurrentTime />
             </div>
             <img id="loader" src='https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif' role="presentation"/>
-            </div>
+
           </div>
         </div>
       </main>
@@ -139,4 +137,4 @@ class EthMemphis extends Component {
   }
 }
 
-export default EthMemphis
+export default RinkebyControls
