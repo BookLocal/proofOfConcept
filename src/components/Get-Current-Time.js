@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
-
-let getCurrentTime = 0;
 let response;
 let web3 = window.web3;
 // stolen code zone vvv
@@ -102,6 +100,7 @@ class GetCurrentTime extends Component{
                 onClick={this.handleSubmit}
               />
               <hr />
+
               <input id="search" type="submit" value="Get Current Time" onClick={this.handleSubmit} />
               {this.state.getCurrentTime}
             </label>
