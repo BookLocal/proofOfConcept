@@ -109,5 +109,20 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  }
+  },
+  "description": "This is a truffle compiled project file.  It is not safe to merge until \"safe\" absolute paths are established.",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andersonmmi/proofOfConcept.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andersonmmi/proofOfConcept/issues"
+  },
+  "homepage": "https://github.com/andersonmmi/proofOfConcept#readme"
 }
