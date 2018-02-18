@@ -19,7 +19,7 @@ class App extends Component {
   //     <AragonApp>
   //       {/* Your app goes here */}
   //     </AragonApp>
-  //   } 
+  //   }
 
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <span>
@@ -46,6 +46,7 @@ class App extends Component {
           <Link to="/guest" className="pure-menu-heading pure-menu-link">GuestView</Link>
           <Link to="/ethmemphis" className="pure-menu-heading pure-menu-link">ETHMemphis</Link>
           <Link to="/hotelfrontdesk" className="pure-menu-heading pure-menu-link">HotelFrontDesk</Link>
+          <Link to="/rinkebycontrols" className="pure-menu-heading pure-menu-link">RinkebyControls</Link>
           <ul className="pure-menu-list navbar-right">
             <OnlyGuestLinks />
             <OnlyAuthLinks />
@@ -53,10 +54,10 @@ class App extends Component {
         </nav>
         <AragonApp>
         {this.props.children}
-        
+
           {/* BUG: right now AragonApp is not seen as a valid react component */}
           {/* <AragonApp /> */}
-       
+
         </AragonApp>
       </div>
     );
