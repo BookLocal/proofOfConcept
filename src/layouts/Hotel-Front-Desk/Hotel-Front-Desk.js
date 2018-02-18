@@ -71,15 +71,12 @@ class HotelFrontDesk extends Component {
       addNumBeds: 0,
       roomInfo: roomInfo
     }
-    this.getBalance = this.getBalance.bind(this);
-    this.getCeo = this.getCeo.bind(this);
-    this.getCfo = this.getCfo.bind(this);
-    this.getCoo = this.getCoo.bind(this);
+    
     this.getTotalSupply = this.getTotalSupply.bind(this);
     this.getroomInfo = this.getRoomInfo.bind(this);
   }
 
-  
+
   getTotalSupply = () => {
     totalSupply = RR.totalSupply().toString();
   }
