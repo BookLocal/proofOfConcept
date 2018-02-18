@@ -31,7 +31,7 @@
 
 @media screen and (max-width: 910px) {
   .Container {
-    background-color: blue;
+    background-color: lightgreen;
     display: grid;
     grid-template-columns:  2fr;
     gridAutoRow: '60px 60px 60px';

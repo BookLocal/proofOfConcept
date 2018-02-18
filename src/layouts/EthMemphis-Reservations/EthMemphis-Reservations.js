@@ -124,13 +124,14 @@ class EthMemphis extends Component {
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
+            <div className="spinner">
             <h1>ETHMemphis Reservation Page</h1>
 
             <div className="Container">
               <Reserve />
             </div>
             <img id="loader" src='https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif' role="presentation"/>
-
+            </div>
           </div>
         </div>
       </main>
