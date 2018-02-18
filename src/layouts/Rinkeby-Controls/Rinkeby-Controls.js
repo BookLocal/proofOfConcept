@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import '../../App.css';
 import './Rinkeby-Controls.css';
 import Web3 from 'web3';
-
+import TotalSupply from '../../components/total-supply.js';
 import Reserve from '../../components/Reserve.js';
 import GetCurrentTime from '../../components/Get-Current-Time.js';
 import AddRoom from '../../components/Add-Room.js';
@@ -11,31 +11,47 @@ import AddAccessCode from '../../components/Add-Access-Code.js'
 import TextInput from '@aragon/ui';
 import Field from '@aragon/ui';
 
-let web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"))
+let web3 = window.web3;
 
-let RBAbi = require('../../../abis/RoomBaseAbi.js');
-let RBAddress = '0x8273e4b8ed6c78e252a9fca5563adfcc75c91b2a';
-let RB = web3.eth.contract(RBAbi).at(RBAddress);
+if (typeof web3 !== 'undefined') {
+  // Use Mist/MetaMask's provider
+  web3 = new Web3(window.web3.currentProvider);
+  console.log("first case");
+} else {
+  console.log('No web3? You should consider trying MetaMask!')
+    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:9545"));
+}
 
-// let ROAbi = require('../../../abis/RoomOwnershipAbi.js');
-// let ROAddress = '0x8f0483125fcb9aaaefa9209d8e9d7b9c8b9fb90f';
-// let RO = web3.eth.contract(ROAbi).at(ROAddress);
 
 let RRAbi = require('../../../abis/RoomRentingAbi.js');
-let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
+let RRAddress = require('../../../Contract-Addresses/Rinkeby-Address.js');
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
-
-let totalSupply = RR.totalSupply().toString();
+let totalSupply = RR.totalSupply((err,res)=>{
+  if(err){
+    console.log("there is an error with the callback");
+  }
+  console.log("success!");
+  console.log(res);
+  totalSupply = Number(res);
+});
+console.log(totalSupply);
 console.log("totalSupply: " + totalSupply + " " + typeof totalSupply);
 // @dev add error handling here: if there are no rooms this method will fail.
 // TODO: Refactor such that we don't use RB, just RR.
-let roomInfo = RB.rooms(Number(totalSupply) - 1);
-let roomId = Number(totalSupply) - 1;
-let hotelId = String(roomInfo[0]).split(',');
-let roomNumber = String(roomInfo[1]).split(',');
-let minRentTime = String(roomInfo[2]).split(',');
-let numBeds = String(roomInfo[3]).split(',');
+// let roomInfo = RR.rooms(Number(totalSupply) - 1, (err,res)=>{
+//   if(err){
+//     console.log("there is an error with the callback");
+//   }
+//   console.log("success!");
+//   console.log(res);
+// });
+// let roomId = Number(totalSupply) - 1;
+// let hotelId = String(roomInfo[0]).split(',');
+// let roomNumber = String(roomInfo[1]).split(',');
+// let minRentTime = String(roomInfo[2]).split(',');
+// let numBeds = String(roomInfo[3]).split(',');
 
 web3.eth.defaultAccount = web3.eth.accounts[0];
 
@@ -55,50 +71,53 @@ class RinkebyControls extends Component {
       addHotelId: 0,
       addRoomNumber: 0,
       addNumBeds: 0,
-      roomInfo: roomInfo
+      roomInfo: "roomInfo"
     }
-    this.getBalance = this.getBalance.bind(this);
-    this.getCeo = this.getCeo.bind(this);
-    this.getCfo = this.getCfo.bind(this);
-    this.getCoo = this.getCoo.bind(this);
-    this.getTotalSupply = this.getTotalSupply.bind(this);
-    this.getroomInfo = this.getRoomInfo.bind(this);
+    // this.getBalance = this.getBalance.bind(this);
+    // this.getTotalSupply = this.getTotalSupply.bind(this);
+    // this.getroomInfo = this.getRoomInfo.bind(this);
   }
 
-  getBalance = () => {
-  }
-  getCeo = () => {
-  }
-  getCfo = () => {
-  }
-  getCoo = () => {
-  }
-  getTotalSupply = () => {
-    totalSupply = RR.totalSupply().toString();
-  }
-  getRoomId = () => {
-    roomId = Number(totalSupply)-1;
-  }
-  getRoomInfo = () => {
-    if (roomId >= 0){
-      console.log("getroomInfo fired!");
-      roomInfo = RR.rooms(roomId);
-      console.log(typeof roomInfo);
-      console.log(roomInfo);
-      hotelId = String(roomInfo[0]).split(',');
-      roomNumber = String(roomInfo[1]).split(',');
-      minRentTime = String(roomInfo[2]).split(',');
-      numBeds = String(roomInfo[3]).split(',');
-      this.setState({
-        hotelId: hotelId,
-        roomNumber: roomNumber,
-        minRentTime: minRentTime,
-        numBeds: numBeds,
-      })
-    } else {
-      console.log("error at Home.js getroomInfo()");
-    }
-  }
+  // getTotalSupply = () => {
+  //   totalSupply = RR.totalSupply((err,res)=>{
+  //     if(err){
+  //       console.log("there is an error with the callback");
+  //     }
+  //     console.log("success!");
+  //     console.log(res);
+  //   }).toString();
+  //   console.log("getTotalSupply fired!");
+  //   console.log(totalSupply);
+  // }
+  // getRoomId = () => {
+  //   roomId = Number(totalSupply)-1;
+  // }
+  // getRoomInfo = () => {
+  //   if (roomId >= 0){
+  //     console.log("getroomInfo fired!");
+  //     roomInfo = RR.rooms(roomId, (err,res)=>{
+  //       if(err){
+  //         console.log("there is an error with the callback");
+  //       }
+  //       console.log("success!");
+  //       console.log(res);
+  //     });
+  //     console.log(typeof roomInfo);
+  //     console.log(roomInfo);
+  //     hotelId = String(roomInfo[0]).split(',');
+  //     roomNumber = String(roomInfo[1]).split(',');
+  //     minRentTime = String(roomInfo[2]).split(',');
+  //     numBeds = String(roomInfo[3]).split(',');
+  //     this.setState({
+  //       hotelId: hotelId,
+  //       roomNumber: roomNumber,
+  //       minRentTime: minRentTime,
+  //       numBeds: numBeds,
+  //     })
+  //   } else {
+  //     console.log("error at Home.js getroomInfo()");
+  //   }
+  // }
   textInput = () => (
     <TextInput type="text" />
   )
@@ -120,6 +139,10 @@ class RinkebyControls extends Component {
               <AddAccessCode />
               <AddRoom />
               <GetCurrentTime />
+              <TotalSupply
+                getTotalSupply={this.getTotalSupply}
+                totalSupply={totalSupply}
+              />
             </div>
             <img id="loader" src='https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif' role="presentation"/>
 
