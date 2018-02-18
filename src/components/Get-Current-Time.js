@@ -29,6 +29,7 @@ class GetCurrentTime extends Component{
 
     this.handleSubmit=this.handleSubmit.bind(this);
     this.handleTextChange=this.handleTextChange.bind(this);
+    this.getTime=this.getTime.bind(this);
   }
 
   handleTextChange = (event) => {
@@ -37,8 +38,7 @@ class GetCurrentTime extends Component{
     }
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
+  getTime = () => {
     console.log("GetCurrentTime fired!");
     RR.getCurrentTime(this.state.tokenId, (err,res)=>{
       if(err){
@@ -48,15 +48,19 @@ class GetCurrentTime extends Component{
       response = Number(res);
       console.log(res);
     });
+    console.log(response);
+    this.setState({
+      getCurrentTime: response,
+    });
+  }
 
-      console.log(response);
-      this.setState({
-        getCurrentTime: response,
-      });
-
+  handleSubmit = (event) => {
+    event.preventDefault();
+    this.getTime();
   }
 
   render(){
+
     const style={
       backgroundColor: '#4D4D4D',
       padding: '10px',
@@ -87,7 +91,14 @@ class GetCurrentTime extends Component{
         <fieldset style={fieldset}>
           <legend style={getStyle}>GetCurrentTime</legend>
             <label style={roomStyle}>Room Id:
-              <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
+              <input
+                id="tokenId"
+                type="text"
+                ref={(input) => {this.getCurrentTime = input}}
+                onChange={this.handleTextChange}
+                value={this.state.tokenId}
+                onClick={this.handleSubmit}
+              />
               <hr />
 
               <input id="search" type="submit" value="Get Current Time" onClick={this.handleSubmit} />

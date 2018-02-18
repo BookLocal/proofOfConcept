@@ -57,10 +57,6 @@ class AddRoomForm extends Component{
     this.setState({
       numBeds : '',
     })
-    this.props.getBalance();
-    this.props.getTotalSupply();
-    this.props.getRoomId();
-    this.props.getRoomInfo();
   }
 
   render() {
