@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import RoomInfo from '../../components/room-details.js';
+
 import '../../App.css';
 import './Rinkeby-Controls.css';
 import Web3 from 'web3';
-import CheckAvailable from '../../components/Check-Available.js';
+
 import Reserve from '../../components/Reserve.js';
 import GetCurrentTime from '../../components/Get-Current-Time.js';
 import AddRoom from '../../components/Add-Room.js';
@@ -25,10 +25,7 @@ let RRAbi = require('../../../abis/RoomRentingAbi.js');
 let RRAddress = '0x345ca3e014aaf5dca488057592ee47305d9b3e10';
 let RR = web3.eth.contract(RRAbi).at(RRAddress);
 
-let balance = web3.fromWei(web3.eth.getBalance(web3.eth.coinbase)).toString();
-let ceo = RR.ceo();
-let cfo = RR.cfo();
-let coo = RR.coo();
+
 let totalSupply = RR.totalSupply().toString();
 console.log("totalSupply: " + totalSupply + " " + typeof totalSupply);
 // @dev add error handling here: if there are no rooms this method will fail.
@@ -69,16 +66,12 @@ class RinkebyControls extends Component {
   }
 
   getBalance = () => {
-  balance = web3.fromWei(web3.eth.getBalance(web3.eth.coinbase)).toString();
   }
   getCeo = () => {
-    ceo = RR.ceo();
   }
   getCfo = () => {
-    cfo = RR.cfo();
   }
   getCoo = () => {
-    coo = RR.coo();
   }
   getTotalSupply = () => {
     totalSupply = RR.totalSupply().toString();

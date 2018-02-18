@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import Web3 from 'web3';
-
-let getCurrentTime = 0;
 let response;
 let web3 = window.web3;
 // stolen code zone vvv
@@ -51,7 +49,7 @@ class GetCurrentTime extends Component{
       console.log(res);
     });
 
-      console.log(Response);
+      console.log(response);
       this.setState({
         getCurrentTime: response,
       });
@@ -91,6 +89,7 @@ class GetCurrentTime extends Component{
             <label style={roomStyle}>Room Id:
               <input id="tokenId" type="text" onChange={this.handleTextChange} value={this.state.tokenId} />
               <hr />
+
               <input id="search" type="submit" value="Get Current Time" onClick={this.handleSubmit} />
               {this.state.getCurrentTime}
             </label>
