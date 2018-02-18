@@ -39,8 +39,10 @@ class AddAccessCode extends Component{
   handleSubmit = (event) => {
     event.preventDefault();
     console.log("addAccessCode fired!");
-    addAccessCode = RR.addAccessCode(
-      web3.fromAscii(this.state.addAccessCode,32),
+    RR.addAccessCode(
+      web3.fromAscii(
+        this.state.addAccessCode,32),
+        {from: web3.eth.accounts[0], gas: 3000000},
       (err,res)=>{
         if(err){
           console.log("there is an error with the callback");
@@ -48,6 +50,8 @@ class AddAccessCode extends Component{
         console.log("success!");
         }
         console.log(res);
+        addAccessCode = res;
+        console.log(addAccessCode);
       }
     );
     console.log(addAccessCode);
@@ -87,7 +91,7 @@ render(){
       <fieldset style={fieldset}>
         <legend style={legendStyle}>AccessCode</legend>
           <label style={labelStyle}>AccessCode:
-            <input id="addAccessCode" type="text" onChange={this.handleTextChange} value={this.state.addAccessCode} />
+            <textarea id="addAccessCode" value={this.state.addAccessCode} onChange={this.handleTextChange} />
             <hr />
             <input id="submit" type="submit" value="AddAccess" onClick={this.handleSubmit} />
             {this.state.addAccessCode}
