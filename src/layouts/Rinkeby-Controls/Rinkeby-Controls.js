@@ -139,10 +139,7 @@ class RinkebyControls extends Component {
               <AddAccessCode />
               <AddRoom />
               <GetCurrentTime />
-              <TotalSupply
-                getTotalSupply={this.getTotalSupply}
-                totalSupply={totalSupply}
-              />
+              
             </div>
             <img id="loader" src='https://loading.io/spinners/double-ring/lg.double-ring-spinner.gif' role="presentation"/>
 
