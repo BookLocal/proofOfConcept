@@ -59,9 +59,7 @@ import './AccessCodes.sol';
     */
 
 // room renting adds ERC-809 renting interface to room ownership
-<<<<<<< HEAD
-contract RoomRenting is RoomOwnership, AccessCodes {
-=======
+
 contract RoomRenting is RoomOwnership {
 
     /**
@@ -69,7 +67,6 @@ contract RoomRenting is RoomOwnership {
     */
 
     address[] accessCodes;
->>>>>>> a5e9bf718f4f0def06d08e8f37d630948049015e
 
     /**
         CONSTRUCTOR
