@@ -59,7 +59,17 @@ import './AccessCodes.sol';
     */
 
 // room renting adds ERC-809 renting interface to room ownership
+<<<<<<< HEAD
 contract RoomRenting is RoomOwnership, AccessCodes {
+=======
+contract RoomRenting is RoomOwnership {
+
+    /**
+        STORAGE
+    */
+
+    address[] accessCodes;
+>>>>>>> a5e9bf718f4f0def06d08e8f37d630948049015e
 
     /**
         CONSTRUCTOR
@@ -75,8 +85,10 @@ contract RoomRenting is RoomOwnership, AccessCodes {
     */
 
     // only let a guests with valid access code reserve the room
-    modifier onlyEthMemphis(address _accessCode) {
-        require(_validAccessCode(_accessCode));
+
+    modifier onlyEthMemphis() {
+        address _guest = msg.sender;
+        require(_validAccessCode(_guest));
         _;
     }
 
@@ -87,6 +99,14 @@ contract RoomRenting is RoomOwnership, AccessCodes {
     /// *** ADD ACCESS CODE *** \\\
     /// only left here for use at ETH memephis
     /// will remove for future versions
+
+    function addAccessCode(address[] _accessCodes) external onlyCLevel {
+
+        for (uint i=0; i<_accessCodes.length; i++) {
+            accessCodes.push(_accessCodes[i]);
+        }
+
+    }
 
     function getNumberOfAccessCodes() external view returns (uint256 _codesLeft) {
         _codesLeft = accessCodes.length;
@@ -136,14 +156,15 @@ contract RoomRenting is RoomOwnership, AccessCodes {
     */
 
     // @dev reserve future access to an asset
-    function reserve(uint256 _tokenId, uint256 _start, uint256 _stop, address _accessCode)
+
+    function reserve(uint256 _tokenId, uint256 _start, uint256 _stop)
 
     external
-    onlyEthMemphis(_accessCode)
+    onlyEthMemphis()
 
     returns (bool)
     {
-        address guest = msg.sender;
+        address _guest = msg.sender;
 
         // comment out for debug and testing
         // require(_isFuture(_start));
@@ -158,10 +179,10 @@ contract RoomRenting is RoomOwnership, AccessCodes {
 
         // make reservation
         for (i = _start; i <= _stop; i ++) {
-            reservations[_tokenId][i] = guest;
+            reservations[_tokenId][i] = _guest;
         }
 
-        _removeAccessCode(_accessCode);
+        _removeAccessCode(_guest);
 
         return true;
     }
