@@ -1,6 +1,7 @@
 pragma solidity ^0.4.17;
 
 import './RoomOwnership.sol';
+import './AccessCodes.sol';
 
 
 // @title ERC809 draft
@@ -31,7 +32,7 @@ import './RoomOwnership.sol';
     /** METHODS ***
 
     ### Temporary for EthMemphis ###
-    addAccessCode(bytes32)................add new access code for ethMemphis aplicants
+    addAccessCode(address)................add new access code for ethMemphis aplicants
     getNumberOfAccessCodes()..............see total outstanding access codes
 
     ### Non-Fungible ###
@@ -58,13 +59,7 @@ import './RoomOwnership.sol';
     */
 
 // room renting adds ERC-809 renting interface to room ownership
-contract RoomRenting is RoomOwnership {
-
-    /**
-        STORAGE
-    */
-
-    bytes32[] accessCodes;
+contract RoomRenting is RoomOwnership, AccessCodes {
 
     /**
         CONSTRUCTOR
@@ -80,7 +75,7 @@ contract RoomRenting is RoomOwnership {
     */
 
     // only let a guests with valid access code reserve the room
-    modifier onlyEthMemphis(bytes32 _accessCode) {
+    modifier onlyEthMemphis(address _accessCode) {
         require(_validAccessCode(_accessCode));
         _;
     }
@@ -92,15 +87,12 @@ contract RoomRenting is RoomOwnership {
     /// *** ADD ACCESS CODE *** \\\
     /// only left here for use at ETH memephis
     /// will remove for future versions
-    function addAccessCode(bytes32 _accessCode) external onlyCLevel {
-        accessCodes.push(_accessCode);
-    }
 
     function getNumberOfAccessCodes() external view returns (uint256 _codesLeft) {
         _codesLeft = accessCodes.length;
     }
 
-    function _validAccessCode(bytes32 _accessCode) internal view returns (bool){
+    function _validAccessCode(address _accessCode) internal view returns (bool){
         for (uint i=0; i<accessCodes.length; i++) {
             if (_accessCode == accessCodes[i]) {
                 return true;
@@ -109,7 +101,7 @@ contract RoomRenting is RoomOwnership {
         return false;
     }
 
-    function _removeAccessCode(bytes32 _accessCode) internal returns(bool) {
+    function _removeAccessCode(address _accessCode) internal returns(bool) {
 
         uint256 _index;
         bool _valid = false;
@@ -144,7 +136,7 @@ contract RoomRenting is RoomOwnership {
     */
 
     // @dev reserve future access to an asset
-    function reserve(uint256 _tokenId, uint256 _start, uint256 _stop, bytes32 _accessCode)
+    function reserve(uint256 _tokenId, uint256 _start, uint256 _stop, address _accessCode)
 
     external
     onlyEthMemphis(_accessCode)
