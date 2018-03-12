@@ -1,8 +1,6 @@
 pragma solidity ^0.4.17;
 
 import './RoomOwnership.sol';
-import './AccessCodes.sol';
-
 
 // @title ERC809 draft
 // @author stevenLee <steven@booklocal.in>
@@ -66,7 +64,15 @@ contract RoomRenting is RoomOwnership {
         STORAGE
     */
 
+    // address array for people that can book a free room
     address[] accessCodes;
+
+    // current bedId
+    // this is just used to automate the room/bed assignment for this event
+    // would not make a production version, but since we are only giving away
+    // free beds (and people will need to share rooms) this makes the process
+    // easier.
+    uint256 nextAssignedBed = 1;
 
     /**
         CONSTRUCTOR
@@ -75,6 +81,9 @@ contract RoomRenting is RoomOwnership {
     //sets the ceo of bookLocal
     function RoomRenting() public {
         ceo = msg.sender;
+
+        // add room zero
+        addRoom(1, 0);
     }
 
     /**
@@ -148,13 +157,21 @@ contract RoomRenting is RoomOwnership {
         return true;
     }
 
+    // automate bed assignments for ethMemphis
+    function _incrementBedId() internal returns (uint256) {
+        uint256 totalBeds = totalSupply();
+        require(nextAssignedBed <= totalBeds);
+
+        nextAssignedBed ++;
+    }
+
     /**
        ERC-809 FUNCTIONS
     */
 
     // @dev reserve future access to an asset
 
-    function reserve(uint256 _tokenId, uint256 _start, uint256 _stop)
+    function reserve(uint256 _start, uint256 _stop)
 
     external
     onlyEthMemphis()
@@ -162,6 +179,7 @@ contract RoomRenting is RoomOwnership {
     returns (bool)
     {
         address _guest = msg.sender;
+        uint256 _tokenId = nextAssignedBed;
 
         // comment out for debug and testing
         // require(_isFuture(_start));
@@ -180,6 +198,7 @@ contract RoomRenting is RoomOwnership {
         }
 
         _removeAccessCode(_guest);
+        _incrementBedId();
 
         return true;
     }

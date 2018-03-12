@@ -18,8 +18,11 @@ contract RoomBase is PermissionedAccess {
         // renter
         address renter;
 
-        // min rental
+        // min rental (unit of time, i.e. one day = 3600*24 seconds)
         uint256 minRentTime;
+
+        // identify room Number
+        uint256 roomNumber;
 
         // identify number of beds
         uint16 numBeds;
@@ -46,7 +49,8 @@ contract RoomBase is PermissionedAccess {
     /**
     Define Functions
     */
-    function addRoom(uint16 _numBeds) external onlyCLevel returns (uint256) {
+
+    function addRoom(uint16 _numBeds, uint256 _roomNumber) public onlyCLevel returns (uint256) {
 
         address _owner = msg.sender;
         address _renter = address(0);
@@ -57,7 +61,8 @@ contract RoomBase is PermissionedAccess {
             owner: _owner,
             renter: _renter,
             minRentTime: _min,
-            numBeds: _numBeds
+            numBeds: _numBeds,
+            roomNumber: _roomNumber
         });
 
         // push new room to rooms array
@@ -77,7 +82,7 @@ contract RoomBase is PermissionedAccess {
     function getRoomInfo(uint256 _tokenId)
         external
         view
-        returns (address owner, address renter, uint256 minRentTime, uint16 numBeds)
+        returns (address owner, address renter, uint256 minRentTime, uint256 roomNumber, uint16 numBeds)
         {
         Room storage room = rooms[_tokenId];
 
@@ -85,6 +90,7 @@ contract RoomBase is PermissionedAccess {
         renter = room.renter;
         minRentTime = room.minRentTime;
         numBeds = room.numBeds;
+        roomNumber = room.roomNumber;
     }
 
     function changeMinRental(uint256 _tokenId, uint256 _newMin) external {
@@ -97,6 +103,12 @@ contract RoomBase is PermissionedAccess {
         Room storage room = rooms[_tokenId];
         require(msg.sender == room.owner);
         room.numBeds = _beds;
+    }
+
+    function changeRoomNum(uint256 _tokenId, uint8 _roomNumber) external {
+        Room storage room = rooms[_tokenId];
+        require(msg.sender == room.owner);
+        room.roomNumber = _roomNumber;
     }
 
     // get time
