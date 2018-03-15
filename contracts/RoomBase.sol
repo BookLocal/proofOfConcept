@@ -89,8 +89,8 @@ contract RoomBase is PermissionedAccess {
         owner = room.owner;
         renter = room.renter;
         minRentTime = room.minRentTime;
-        numBeds = room.numBeds;
         roomNumber = room.roomNumber;
+        numBeds = room.numBeds;
     }
 
     function changeMinRental(uint256 _tokenId, uint256 _newMin) external {
